@@ -1,5 +1,5 @@
-#!/usr/bin/env bash
-set -euo pipefail
+#!/usr/bin/env sh
+set -eu
 
 mkdir -p models
 if [ ! -f models/ag_surrogate.pkl ]; then
