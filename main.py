@@ -4,7 +4,6 @@ Climate Resilience Engine - Flask API
 
 import os
 import pickle
-import urllib.request
 from datetime import datetime, timedelta
 from functools import wraps
 
@@ -20,35 +19,15 @@ CORS(app)
 
 # Model configuration
 MODEL_PATH = 'ag_surrogate.pkl'
-MODEL_URL = os.getenv(
-    'MODEL_URL',
-    'https://github.com/dizzy1900/adaptmetric-backend/releases/download/v1.0.0/ag_surrogate.pkl'
-)
 model = None
 
-
-def download_model():
-    """Download model from GitHub Releases if not present locally."""
-    if os.path.exists(MODEL_PATH):
-        return True
-    print(f"Downloading model from {MODEL_URL}...")
-    try:
-        urllib.request.urlretrieve(MODEL_URL, MODEL_PATH)
-        print("Model downloaded successfully.")
-        return True
-    except Exception as e:
-        print(f"Failed to download model: {e}")
-        return False
-
-
-# Download and load model at startup
-download_model()
-
+# Load model at startup (start.sh ensures the file exists)
 try:
     with open(MODEL_PATH, 'rb') as f:
         model = pickle.load(f)
+    print(f"Model loaded successfully from {MODEL_PATH}")
 except FileNotFoundError:
-    print(f"Warning: Model file '{MODEL_PATH}' not found. /predict endpoint will fail.")
+    print(f"Warning: Model file '{MODEL_PATH}' not found. Run start.sh or download manually.")
 except Exception as e:
     print(f"Warning: Failed to load model: {e}")
 
