@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 set -e
 
-MODEL_URL="${MODEL_URL:-https://github.com/dizzy1900/adaptmetric-backend/releases/download/v1.0.0/ag_surrogate.pkl}"
+MODEL_URL="${MODEL_URL:-https://github.com/dizzy1900/adaptmetric-backend/releases/download/v1.0.0/ag.surrogate.pkl}"
 MODEL_PATH="ag_surrogate.pkl"
 
 if [ ! -f "$MODEL_PATH" ]; then
