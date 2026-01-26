@@ -114,7 +114,8 @@ def get_hazard():
                 'period': 'last_12_months'
             }
         except Exception as gee_error:
-            print(f"GEE error, using fallback: {gee_error}")
+            import sys
+            print(f"GEE error, using fallback: {gee_error}", file=sys.stderr, flush=True)
             hazard_metrics = FALLBACK_WEATHER.copy()
         
         return jsonify({
@@ -243,5 +244,5 @@ def method_not_allowed(error):
 
 
 if __name__ == '__main__':
-    port = int(os.getenv('PORT', 5000))
+    port = int(os.getenv('PORT', 5001))
     app.run(host='0.0.0.0', port=port, debug=True)
