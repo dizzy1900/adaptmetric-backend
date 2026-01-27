@@ -2,28 +2,40 @@
 
 MODEL_URL="${MODEL_URL:-https://github.com/dizzy1900/adaptmetric-backend/releases/download/v1.0.0/ag.surrogate.pkl}"
 MODEL_PATH="ag_surrogate.pkl"
+MIN_MODEL_SIZE=10000000  # 10MB minimum expected size
 
 echo "=== Model Download Setup ==="
 echo "Model URL: $MODEL_URL"
 echo "Model Path: $MODEL_PATH"
-echo "File exists: $([ -f "$MODEL_PATH" ] && echo "YES ($(ls -lh "$MODEL_PATH" 2>/dev/null | awk '{print $5}'))" || echo "NO")"
 
-# Force re-download if file exists but is corrupted or wrong
+# Force re-download if file doesn't look valid
 if [ -f "$MODEL_PATH" ]; then
-  # Check if file is valid pickle (not HTML error page)
-  if head -1 "$MODEL_PATH" | grep -q "HTTP\|<!DOCTYPE\|<html"; then
-    echo "Found corrupted model file (looks like HTML). Removing..."
+  FILE_SIZE=$(wc -c < "$MODEL_PATH" 2>/dev/null || echo "0")
+  echo "File exists: YES (size: $FILE_SIZE bytes)"
+
+  # Check if file is suspiciously small (< 10MB) or looks like HTML
+  if [ "$FILE_SIZE" -lt "$MIN_MODEL_SIZE" ] || head -1 "$MODEL_PATH" | grep -q "HTTP\|<!DOCTYPE\|<html"; then
+    echo "Found corrupted or invalid model file (size too small or looks like HTML). Removing..."
     rm -f "$MODEL_PATH"
   fi
+else
+  echo "File exists: NO"
 fi
 
 if [ ! -f "$MODEL_PATH" ]; then
   echo "Downloading model from $MODEL_URL..."
-  curl -L --retry 3 --retry-delay 5 --max-time 300 --fail -o "$MODEL_PATH" "$MODEL_URL"
+  curl -L --retry 3 --retry-delay 5 --max-time 600 --fail -o "$MODEL_PATH" "$MODEL_URL"
 
   if [ -f "$MODEL_PATH" ]; then
-    SIZE=$(ls -lh "$MODEL_PATH" | awk '{print $5}')
-    echo "Model downloaded successfully. Size: $SIZE"
+    FILE_SIZE=$(wc -c < "$MODEL_PATH")
+    echo "Model downloaded successfully. Size: $FILE_SIZE bytes"
+
+    # Verify file size is reasonable
+    if [ "$FILE_SIZE" -lt "$MIN_MODEL_SIZE" ]; then
+      echo "ERROR: Downloaded file is too small ($FILE_SIZE bytes), expected > 10MB"
+      echo "First bytes: $(head -c 50 "$MODEL_PATH")"
+      exit 1
+    fi
 
     # Verify file isn't an error page
     if head -1 "$MODEL_PATH" | grep -q "HTTP\|<!DOCTYPE\|<html"; then
@@ -35,7 +47,7 @@ if [ ! -f "$MODEL_PATH" ]; then
     exit 1
   fi
 else
-  echo "Model file already exists, skipping download"
+  echo "Model file already exists with valid size, skipping download"
 fi
 
 echo "=== Starting Gunicorn ==="
