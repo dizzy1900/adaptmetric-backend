@@ -12,7 +12,7 @@ import pandas as pd
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
-from gee_connector import get_weather_data
+from gee_connector import get_weather_data, get_coastal_params
 
 app = Flask(__name__)
 CORS(app)
@@ -230,7 +230,7 @@ def predict():
 
 
 @app.route('/predict-coastal', methods=['POST'])
-@validate_json('wave_height', 'slope', 'mangrove_width_m')
+@validate_json('lat', 'lon', 'mangrove_width')
 def predict_coastal():
     """Predict coastal runup elevation with and without mangrove protection."""
     if coastal_model is None:
@@ -242,68 +242,60 @@ def predict_coastal():
 
     try:
         data = request.get_json()
-        wave_height = float(data['wave_height'])
-        slope = float(data['slope'])
-        mangrove_width_m = float(data['mangrove_width_m'])
+        lat = float(data['lat'])
+        lon = float(data['lon'])
+        mangrove_width = float(data['mangrove_width'])
 
-        # Create DataFrames for both realities
-        # Reality A (Gray): No mangrove protection
-        reality_a_df = pd.DataFrame({
+        if not (-90 <= lat <= 90):
+            return jsonify({
+                'status': 'error',
+                'message': 'Latitude must be between -90 and 90',
+                'code': 'INVALID_LATITUDE'
+            }), 400
+
+        if not (-180 <= lon <= 180):
+            return jsonify({
+                'status': 'error',
+                'message': 'Longitude must be between -180 and 180',
+                'code': 'INVALID_LONGITUDE'
+            }), 400
+
+        # Step A: Fetch coastal parameters from Google Earth Engine
+        coastal_data = get_coastal_params(lat, lon)
+        slope = coastal_data['slope_pct']
+        wave_height = coastal_data['max_wave_height']
+
+        # Step B: Run predictions for both scenarios
+        # Scenario A (Gray): No mangrove protection (mangrove_width = 0)
+        scenario_a_df = pd.DataFrame({
             'wave_height': [wave_height],
             'slope': [slope],
             'mangrove_width_m': [0.0]
         })
 
-        # Reality B (Green): With mangrove protection
-        reality_b_df = pd.DataFrame({
+        # Scenario B (Green): With mangrove protection (user's mangrove_width)
+        scenario_b_df = pd.DataFrame({
             'wave_height': [wave_height],
             'slope': [slope],
-            'mangrove_width_m': [mangrove_width_m]
+            'mangrove_width_m': [mangrove_width]
         })
 
-        # Run predictions
-        runup_a = float(coastal_model.predict(reality_a_df)[0])
-        runup_b = float(coastal_model.predict(reality_b_df)[0])
-
-        # Calculate reduction percentage
-        if runup_a > 0:
-            reduction_percent = ((runup_a - runup_b) / runup_a) * 100
-        else:
-            reduction_percent = 0.0
+        runup_a = float(coastal_model.predict(scenario_a_df)[0])
+        runup_b = float(coastal_model.predict(scenario_b_df)[0])
 
         return jsonify({
             'status': 'success',
             'data': {
-                'input_conditions': {
-                    'wave_height': wave_height,
-                    'slope': slope,
-                    'mangrove_width_m': mangrove_width_m
-                },
-                'predictions': {
-                    'reality_a_gray': {
-                        'description': 'Without mangrove protection',
-                        'mangrove_width_m': 0.0,
-                        'runup_elevation': round(runup_a, 4)
-                    },
-                    'reality_b_green': {
-                        'description': 'With mangrove protection',
-                        'mangrove_width_m': mangrove_width_m,
-                        'runup_elevation': round(runup_b, 4)
-                    }
-                },
-                'analysis': {
-                    'runup_a': round(runup_a, 4),
-                    'runup_b': round(runup_b, 4),
-                    'reduction_percent': round(reduction_percent, 2),
-                    'protection_effect': 'significant' if reduction_percent > 30 else 'moderate' if reduction_percent > 10 else 'minimal'
-                }
+                'runup_A': round(runup_a, 4),
+                'runup_B': round(runup_b, 4),
+                'storm_wave_height_used': round(wave_height, 2)
             }
         }), 200
 
     except ValueError:
         return jsonify({
             'status': 'error',
-            'message': 'Invalid numeric values for wave_height/slope/mangrove_width_m',
+            'message': 'Invalid numeric values for lat/lon/mangrove_width',
             'code': 'INVALID_NUMERIC_VALUE'
         }), 400
     except Exception as e:
