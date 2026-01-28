@@ -283,8 +283,24 @@ def predict_coastal():
         runup_a = float(coastal_model.predict(scenario_a_df)[0])
         runup_b = float(coastal_model.predict(scenario_b_df)[0])
         
-        # Calculate avoided runup
+        # Calculate avoided runup (in meters)
         avoided_runup = runup_a - runup_b
+        
+        # Convert avoided runup to economic value
+        # Using standard coastal property damage estimates:
+        # - Typical coastal property value: $500,000 per meter of frontage
+        # - Average lot depth: 30 meters
+        # - Flood damage: $1,000 per square meter per meter of flooding
+        # - Formula: avoided_damage = avoided_runup * property_frontage * damage_per_sqm
+        
+        # Conservative estimate: $10,000 per meter of avoided runup per property
+        # This accounts for structural damage, contents, cleanup, and business interruption
+        DAMAGE_COST_PER_METER = 10000  # USD per meter of runup per affected property
+        
+        # Assume analysis covers 100 properties (typical coastal community project scale)
+        NUM_PROPERTIES = 100
+        
+        avoided_damage_usd = avoided_runup * DAMAGE_COST_PER_METER * NUM_PROPERTIES
 
         return jsonify({
             'status': 'success',
@@ -292,8 +308,14 @@ def predict_coastal():
                 'runup_baseline': round(runup_a, 4),
                 'runup_resilient': round(runup_b, 4),
                 'avoided_runup': round(avoided_runup, 4),
+                'avoided_damage_usd': round(avoided_damage_usd, 2),
                 'detected_slope_pct': round(slope, 2),
-                'storm_wave_height': round(wave_height, 2)
+                'storm_wave_height': round(wave_height, 2),
+                'assumptions': {
+                    'damage_cost_per_meter': DAMAGE_COST_PER_METER,
+                    'num_properties': NUM_PROPERTIES,
+                    'note': 'Economic value represents avoided damage for typical coastal community'
+                }
             }
         }), 200
 
