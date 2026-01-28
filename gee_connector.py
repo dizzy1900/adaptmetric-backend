@@ -99,30 +99,40 @@ def get_coastal_params(lat: float, lon: float) -> dict:
     end_date = datetime.now()
     start_date = end_date - timedelta(days=5*365)
     
-    # Use ERA5/HOURLY for wave data (has actual ocean wave parameters)
-    wave_collection = ee.ImageCollection('ECMWF/ERA5/HOURLY') \
-        .filterBounds(point) \
-        .filterDate(start_date.strftime('%Y-%m-%d'), end_date.strftime('%Y-%m-%d'))
+    # Try multiple wave data sources
+    max_wave_height = None
     
-    # Try to get significant wave height; if it fails, fall back to a proxy
     try:
-        # First try with the most common band name
-        max_wave_img = wave_collection.select('significant_wave_height').max()
-        wave_result = max_wave_img.reduceRegion(
-            reducer=ee.Reducer.max(),
-            geometry=point,
-            scale=27830  # ERA5/HOURLY scale
-        )
-        wave_height_info = wave_result.getInfo()
-        max_wave_height = wave_height_info.get('significant_wave_height')
-    except Exception:
-        # If that fails, the wave data might be named differently or not available
-        # Try alternative approaches or use a reasonable default
-        max_wave_height = 3.0  # Default fallback for coastal areas (typical storm wave height)
+        # Option 1: Try ERA5 monthly wave data (more reliable for ocean areas)
+        wave_monthly = ee.ImageCollection('ECMWF/ERA5/MONTHLY') \
+            .filterBounds(point) \
+            .filterDate(start_date.strftime('%Y-%m-%d'), end_date.strftime('%Y-%m-%d')) \
+            .select('mean_significant_wave_height')
+        
+        if wave_monthly.size().getInfo() > 0:
+            max_wave_img = wave_monthly.max()
+            wave_result = max_wave_img.reduceRegion(
+                reducer=ee.Reducer.max(),
+                geometry=point,
+                scale=27830
+            )
+            wave_height_info = wave_result.getInfo()
+            max_wave_height = wave_height_info.get('mean_significant_wave_height')
+    except Exception as e:
+        print(f"ERA5 monthly wave data failed: {e}")
     
+    # Option 2: If no wave data, estimate based on distance from coast and latitude
     if max_wave_height is None or max_wave_height == 0:
-        # Set a reasonable default for areas without wave data coverage
-        max_wave_height = 2.5
+        # Use latitude-based estimation (tropical areas have higher waves)
+        abs_lat = abs(lat)
+        if abs_lat < 10:  # Tropical (more storms)
+            max_wave_height = 4.5
+        elif abs_lat < 30:  # Subtropical
+            max_wave_height = 3.5
+        elif abs_lat < 50:  # Temperate
+            max_wave_height = 3.0
+        else:  # High latitude
+            max_wave_height = 2.5
     
     return {
         'slope_pct': slope_pct,
