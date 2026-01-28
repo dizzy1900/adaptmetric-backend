@@ -134,6 +134,11 @@ def get_coastal_params(lat: float, lon: float) -> dict:
         else:  # High latitude
             max_wave_height = 2.5
     
+    # Final safety check - ensure wave height is never 0
+    if max_wave_height == 0:
+        print(f"[WARNING] Wave height was 0 at lat={lat}, lon={lon}. Using default 3.0m")
+        max_wave_height = 3.0
+    
     return {
         'slope_pct': slope_pct,
         'max_wave_height': max_wave_height

@@ -340,7 +340,11 @@ def predict_coastal():
                     'damage_cost_per_meter': DAMAGE_COST_PER_METER,
                     'num_properties': NUM_PROPERTIES,
                     'total_value_basis': 'USD per meter of flood reduction × properties affected'
-                }
+                },
+                # Add flat fields for frontend compatibility
+                'slope': round(slope / 100, 4),  # Convert percentage to decimal (e.g., 14.12% -> 0.1412)
+                'storm_wave': round(wave_height, 2),
+                'avoided_loss': round(avoided_damage_usd, 2)
             }
         }), 200
 
