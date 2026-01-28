@@ -301,20 +301,36 @@ def predict_coastal():
         NUM_PROPERTIES = 100
         
         avoided_damage_usd = avoided_runup * DAMAGE_COST_PER_METER * NUM_PROPERTIES
+        
+        # Calculate percentage improvement
+        percentage_improvement = (avoided_runup / runup_a * 100) if runup_a > 0 else 0
 
         return jsonify({
             'status': 'success',
             'data': {
-                'runup_baseline': round(runup_a, 4),
-                'runup_resilient': round(runup_b, 4),
-                'avoided_runup': round(avoided_runup, 4),
-                'avoided_damage_usd': round(avoided_damage_usd, 2),
-                'detected_slope_pct': round(slope, 2),
-                'storm_wave_height': round(wave_height, 2),
-                'assumptions': {
+                'input_conditions': {
+                    'lat': lat,
+                    'lon': lon,
+                    'mangrove_width_m': mangrove_width
+                },
+                'coastal_params': {
+                    'detected_slope_pct': round(slope, 2),
+                    'storm_wave_height': round(wave_height, 2)
+                },
+                'predictions': {
+                    'baseline_runup': round(runup_a, 4),
+                    'protected_runup': round(runup_b, 4)
+                },
+                'analysis': {
+                    'avoided_loss': round(avoided_damage_usd, 2),
+                    'avoided_runup_m': round(avoided_runup, 4),
+                    'percentage_improvement': round(percentage_improvement, 2),
+                    'recommendation': 'with_mangroves' if avoided_runup > 0 else 'baseline'
+                },
+                'economic_assumptions': {
                     'damage_cost_per_meter': DAMAGE_COST_PER_METER,
                     'num_properties': NUM_PROPERTIES,
-                    'note': 'Economic value represents avoided damage for typical coastal community'
+                    'total_value_basis': 'USD per meter of flood reduction × properties affected'
                 }
             }
         }), 200
