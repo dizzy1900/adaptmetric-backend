@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-MODEL_URL="${MODEL_URL:-https://github.com/dizzy1900/adaptmetric-backend/releases/download/v1.0.0/ag.surrogate.pkl}"
+MODEL_URL="${MODEL_URL:-https://github.com/dizzy1900/adaptmetric-backend/releases/download/v1.1.0/ag_surrogate.pkl}"
 MODEL_PATH="ag_surrogate.pkl"
 MIN_MODEL_SIZE=10000000  # 10MB minimum expected size
 
@@ -14,7 +14,7 @@ import os
 import sys
 import urllib.request
 
-model_url = os.environ.get("MODEL_URL", "https://github.com/dizzy1900/adaptmetric-backend/releases/download/v1.0.0/ag.surrogate.pkl")
+model_url = os.environ.get("MODEL_URL", "https://github.com/dizzy1900/adaptmetric-backend/releases/download/v1.1.0/ag_surrogate.pkl")
 model_path = "ag_surrogate.pkl"
 min_size = 10_000_000  # 10MB
 
