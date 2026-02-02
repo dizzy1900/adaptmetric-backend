@@ -4,6 +4,7 @@ Climate Resilience Engine - Flask API
 
 import os
 import pickle
+import threading
 from datetime import datetime, timedelta
 from functools import wraps
 
@@ -13,6 +14,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 from gee_connector import get_weather_data, get_coastal_params
+from batch_processor import run_batch_job
 
 app = Flask(__name__)
 # Enable CORS for all origins (Lovable uses multiple domains)
@@ -588,6 +590,40 @@ def predict_flood():
             'status': 'error',
             'message': f'Prediction failed: {str(e)}',
             'code': 'PREDICTION_ERROR'
+        }), 500
+
+
+@app.route('/start-batch', methods=['POST'])
+@validate_json('job_id')
+def start_batch():
+    """Start a background batch processing job for portfolio assets."""
+    try:
+        data = request.get_json()
+        job_id = str(data['job_id'])
+        
+        # Start batch processing in a background thread
+        # This prevents the API from timing out during long-running jobs
+        thread = threading.Thread(
+            target=run_batch_job,
+            args=(job_id,),
+            daemon=True
+        )
+        thread.start()
+        
+        import sys
+        print(f"[API] Started batch job {job_id} in background thread", file=sys.stderr, flush=True)
+        
+        return jsonify({
+            'status': 'started',
+            'job_id': job_id,
+            'message': 'Batch processing started in background. Check batch_jobs table for status.'
+        }), 202  # 202 Accepted - request accepted for processing
+        
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': f'Failed to start batch job: {str(e)}',
+            'code': 'BATCH_START_ERROR'
         }), 500
 
 
