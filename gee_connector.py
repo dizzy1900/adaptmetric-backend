@@ -26,35 +26,67 @@ def get_weather_data(lat: float, lon: float, start_date: str, end_date: str) -> 
     """
     Get weather data from ERA5-Land dataset for a location and date range.
     
+    Specifically designed for maize heat stress analysis:
+    - Temperature: Maximum temperature during peak growing season (July 1 - Aug 31)
+    - Rainfall: Total precipitation during full growing season (May 1 - Sept 30)
+    
     Args:
         lat: Latitude
         lon: Longitude
-        start_date: Start date (YYYY-MM-DD)
-        end_date: End date (YYYY-MM-DD)
+        start_date: Start date (YYYY-MM-DD) - used to determine year
+        end_date: End date (YYYY-MM-DD) - used to determine year
     
     Returns:
-        Dictionary with 'avg_temp_c' (average max temperature in Celsius)
-        and 'total_precip_mm' (total precipitation in mm)
+        Dictionary with 'max_temp_celsius' (maximum temperature during peak season)
+        and 'total_precip_mm' (total precipitation during growing season)
     """
     authenticate_gee()
     
     point = ee.Geometry.Point([lon, lat])
     
-    dataset = ee.ImageCollection('ECMWF/ERA5_LAND/DAILY_AGGR') \
-        .filterBounds(point) \
-        .filterDate(start_date, end_date)
+    # Extract year from start_date to construct growing season dates
+    start_year = datetime.strptime(start_date, '%Y-%m-%d').year
+    end_year = datetime.strptime(end_date, '%Y-%m-%d').year
     
-    # Get average of max temperature (Kelvin to Celsius)
-    temp_max = dataset.select('temperature_2m_max').mean()
-    temp_value = temp_max.reduceRegion(
-        reducer=ee.Reducer.mean(),
+    # Use the most recent complete growing season
+    # If end_date is before September, use previous year's season
+    end_date_obj = datetime.strptime(end_date, '%Y-%m-%d')
+    if end_date_obj.month < 9:
+        year = end_year - 1
+    else:
+        year = end_year
+    
+    # Peak growing season for heat stress: July 1 - August 31
+    peak_start = f'{year}-07-01'
+    peak_end = f'{year}-08-31'
+    
+    # Full growing season for rainfall: May 1 - September 30
+    growing_start = f'{year}-05-01'
+    growing_end = f'{year}-09-30'
+    
+    # Get MAXIMUM temperature during peak season (July-August)
+    # This captures heat stress events, not average conditions
+    peak_dataset = ee.ImageCollection('ECMWF/ERA5_LAND/DAILY_AGGR') \
+        .filterBounds(point) \
+        .filterDate(peak_start, peak_end) \
+        .select('temperature_2m_max')
+    
+    # Use max() to get the maximum daily temperature across the peak period
+    temp_max_img = peak_dataset.max()
+    temp_value = temp_max_img.reduceRegion(
+        reducer=ee.Reducer.max(),
         geometry=point,
         scale=11132
     ).get('temperature_2m_max')
-    avg_temp_c = ee.Number(temp_value).subtract(273.15).getInfo()
+    max_temp_celsius = ee.Number(temp_value).subtract(273.15).getInfo()
     
-    # Get total precipitation (already in meters, convert to mm)
-    precip = dataset.select('total_precipitation_sum').sum()
+    # Get total precipitation during full growing season (May-Sept)
+    growing_dataset = ee.ImageCollection('ECMWF/ERA5_LAND/DAILY_AGGR') \
+        .filterBounds(point) \
+        .filterDate(growing_start, growing_end) \
+        .select('total_precipitation_sum')
+    
+    precip = growing_dataset.sum()
     precip_value = precip.reduceRegion(
         reducer=ee.Reducer.mean(),
         geometry=point,
@@ -63,7 +95,7 @@ def get_weather_data(lat: float, lon: float, start_date: str, end_date: str) -> 
     total_precip_mm = ee.Number(precip_value).multiply(1000).getInfo()
     
     return {
-        'avg_temp_c': avg_temp_c,
+        'max_temp_celsius': max_temp_celsius,
         'total_precip_mm': total_precip_mm
     }
 

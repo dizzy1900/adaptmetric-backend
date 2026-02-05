@@ -145,9 +145,9 @@ def get_hazard():
             )
             
             hazard_metrics = {
-                'max_temp_celsius': weather_data['avg_temp_c'],
+                'max_temp_celsius': weather_data['max_temp_celsius'],
                 'total_rain_mm': weather_data['total_precip_mm'],
-                'period': 'last_12_months'
+                'period': 'growing_season_peak'
             }
         except Exception as gee_error:
             import sys
@@ -223,7 +223,7 @@ def predict():
                     end_date=end_date.strftime('%Y-%m-%d')
                 )
                 
-                base_temp = weather_data['avg_temp_c']
+                base_temp = weather_data['max_temp_celsius']
                 base_rain = weather_data['total_precip_mm']
                 data_source = 'gee_auto_lookup'
                 
