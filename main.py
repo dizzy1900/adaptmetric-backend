@@ -15,6 +15,7 @@ from flask_cors import CORS
 
 from gee_connector import get_weather_data, get_coastal_params
 from batch_processor import run_batch_job
+from physics_engine import simulate_maize_yield
 
 app = Flask(__name__)
 # Enable CORS for all origins (Lovable uses multiple domains)
@@ -188,22 +189,27 @@ def predict():
         temp = float(data['temp'])
         rain = float(data['rain'])
         
-        # Create DataFrames for each seed type
-        standard_df = pd.DataFrame({
-            'temp': [temp],
-            'rain': [rain],
-            'seed_type': [SEED_TYPES['standard']]
-        })
+        # Climate perturbation parameters (optional)
+        # Delta Method: temp uses additive, rain uses percentage scaling
+        temp_increase = float(data.get('temp_increase', 0.0))
+        rain_change = float(data.get('rain_change', 0.0))
         
-        resilient_df = pd.DataFrame({
-            'temp': [temp],
-            'rain': [rain],
-            'seed_type': [SEED_TYPES['resilient']]
-        })
+        # Run predictions using physics engine with climate perturbation
+        standard_yield = simulate_maize_yield(
+            temp=temp,
+            rain=rain,
+            seed_type=SEED_TYPES['standard'],
+            temp_delta=temp_increase,
+            rain_pct_change=rain_change
+        )
         
-        # Run predictions
-        standard_yield = float(model.predict(standard_df)[0])
-        resilient_yield = float(model.predict(resilient_df)[0])
+        resilient_yield = simulate_maize_yield(
+            temp=temp,
+            rain=rain,
+            seed_type=SEED_TYPES['resilient'],
+            temp_delta=temp_increase,
+            rain_pct_change=rain_change
+        )
         
         avoided_loss = resilient_yield - standard_yield
         
