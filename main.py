@@ -174,20 +174,80 @@ def get_hazard():
 
 
 @app.route('/predict', methods=['POST'])
-@validate_json('temp', 'rain')
 def predict():
-    """Predict crop yield and calculate avoided loss."""
-    if model is None:
+    """Predict crop yield and calculate avoided loss.
+    
+    Supports two modes:
+    - Mode A (Auto-Lookup): Provide lat/lon to fetch weather data from GEE
+    - Mode B (Manual): Provide temp/rain directly
+    """
+    if not request.is_json:
         return jsonify({
             'status': 'error',
-            'message': 'Model file not found. Ensure ag_surrogate.pkl exists.',
-            'code': 'MODEL_NOT_FOUND'
-        }), 500
+            'message': 'Request must be JSON',
+            'code': 'INVALID_CONTENT_TYPE'
+        }), 400
     
     try:
         data = request.get_json()
-        temp = float(data['temp'])
-        rain = float(data['rain'])
+        
+        # Mode A: Auto-Lookup using lat/lon (Priority)
+        if 'lat' in data and 'lon' in data:
+            lat = float(data['lat'])
+            lon = float(data['lon'])
+            
+            # Validate coordinates
+            if not (-90 <= lat <= 90):
+                return jsonify({
+                    'status': 'error',
+                    'message': 'Latitude must be between -90 and 90',
+                    'code': 'INVALID_LATITUDE'
+                }), 400
+            
+            if not (-180 <= lon <= 180):
+                return jsonify({
+                    'status': 'error',
+                    'message': 'Longitude must be between -180 and 180',
+                    'code': 'INVALID_LONGITUDE'
+                }), 400
+            
+            # Fetch weather data from Google Earth Engine
+            try:
+                end_date = datetime.now()
+                start_date = end_date - timedelta(days=365)
+                
+                weather_data = get_weather_data(
+                    lat=lat,
+                    lon=lon,
+                    start_date=start_date.strftime('%Y-%m-%d'),
+                    end_date=end_date.strftime('%Y-%m-%d')
+                )
+                
+                base_temp = weather_data['avg_temp_c']
+                base_rain = weather_data['total_precip_mm']
+                data_source = 'gee_auto_lookup'
+                
+            except Exception as gee_error:
+                import sys
+                print(f"GEE error, using fallback: {gee_error}", file=sys.stderr, flush=True)
+                
+                # Use fallback weather data
+                base_temp = FALLBACK_WEATHER['max_temp_celsius']
+                base_rain = FALLBACK_WEATHER['total_rain_mm']
+                data_source = 'fallback'
+        
+        # Mode B: Manual fallback using temp/rain
+        elif 'temp' in data and 'rain' in data:
+            base_temp = float(data['temp'])
+            base_rain = float(data['rain'])
+            data_source = 'manual'
+        
+        else:
+            return jsonify({
+                'status': 'error',
+                'message': 'Missing required fields: provide either (lat, lon) or (temp, rain)',
+                'code': 'MISSING_FIELDS'
+            }), 400
         
         # Climate perturbation parameters (optional)
         # Delta Method: temp uses additive, rain uses percentage scaling
@@ -196,16 +256,16 @@ def predict():
         
         # Run predictions using physics engine with climate perturbation
         standard_yield = simulate_maize_yield(
-            temp=temp,
-            rain=rain,
+            temp=base_temp,
+            rain=base_rain,
             seed_type=SEED_TYPES['standard'],
             temp_delta=temp_increase,
             rain_pct_change=rain_change
         )
         
         resilient_yield = simulate_maize_yield(
-            temp=temp,
-            rain=rain,
+            temp=base_temp,
+            rain=base_rain,
             seed_type=SEED_TYPES['resilient'],
             temp_delta=temp_increase,
             rain_pct_change=rain_change
@@ -222,8 +282,9 @@ def predict():
             'status': 'success',
             'data': {
                 'input_conditions': {
-                    'max_temp_celsius': temp,
-                    'total_rain_mm': rain
+                    'max_temp_celsius': base_temp,
+                    'total_rain_mm': base_rain,
+                    'data_source': data_source
                 },
                 'predictions': {
                     'standard_seed': {
