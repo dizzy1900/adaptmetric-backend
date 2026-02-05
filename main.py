@@ -254,6 +254,12 @@ def predict():
         temp_increase = float(data.get('temp_increase', 0.0))
         rain_change = float(data.get('rain_change', 0.0))
         
+        # Calculate final simulated values for debug output
+        # These are the exact values passed to the physics engine
+        final_simulated_temp = base_temp + temp_increase
+        rain_modifier = 1.0 + (rain_change / 100.0)
+        final_simulated_rain = max(0.0, base_rain * rain_modifier)
+        
         # Run predictions using physics engine with climate perturbation
         standard_yield = simulate_maize_yield(
             temp=base_temp,
@@ -300,6 +306,14 @@ def predict():
                     'avoided_loss': round(avoided_loss, 2),
                     'percentage_improvement': round(percentage_improvement, 2),
                     'recommendation': 'resilient' if avoided_loss > 0 else 'standard'
+                },
+                'simulation_debug': {
+                    'raw_temp': round(base_temp, 2),
+                    'perturbation_added': round(temp_increase, 2),
+                    'final_simulated_temp': round(final_simulated_temp, 2),
+                    'raw_rain': round(base_rain, 2),
+                    'rain_modifier': round(rain_change, 2),
+                    'final_simulated_rain': round(final_simulated_rain, 2)
                 }
             }
         }), 200
