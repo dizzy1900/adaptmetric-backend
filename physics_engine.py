@@ -13,7 +13,7 @@ HEAT_LOSS_RATE_DROUGHT = 4.0    # Increased from 1.7
 # Rainfall thresholds (mm)
 MIN_RAINFALL_MM = 300.0
 OPTIMAL_RAINFALL_MIN_MM = 500.0
-OPTIMAL_RAINFALL_MAX_MM = 900.0  # Increased from 800.0
+OPTIMAL_RAINFALL_MAX_MM = 1300.0  # Widened optimal range for high-rainfall regions
 
 # Resilience delta for climate-smart varieties
 RESILIENCE_DELTA_C = 3.0  # Increased from 2.0 - better heat tolerance
