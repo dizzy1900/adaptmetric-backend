@@ -13,7 +13,7 @@ import pandas as pd
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
-from gee_connector import get_weather_data, get_coastal_params, get_monthly_data
+from gee_connector import get_weather_data, get_coastal_params, get_monthly_data, analyze_spatial_viability
 from batch_processor import run_batch_job
 from physics_engine import simulate_maize_yield
 
@@ -235,6 +235,11 @@ def predict():
                     print(f"Monthly data error: {monthly_error}", file=sys.stderr, flush=True)
                     monthly_data = None
                 
+                # Store lat/lon for spatial analysis later
+                has_location = True
+                location_lat = lat
+                location_lon = lon
+                
             except Exception as gee_error:
                 import sys
                 print(f"GEE error, using fallback: {gee_error}", file=sys.stderr, flush=True)
@@ -244,6 +249,7 @@ def predict():
                 base_rain = FALLBACK_WEATHER['total_rain_mm']
                 data_source = 'fallback'
                 monthly_data = None
+                has_location = False
         
         # Mode B: Manual fallback using temp/rain
         elif 'temp' in data and 'rain' in data:
@@ -251,6 +257,7 @@ def predict():
             base_rain = float(data['rain'])
             data_source = 'manual'
             monthly_data = None
+            has_location = False
         
         else:
             return jsonify({
@@ -293,6 +300,20 @@ def predict():
             percentage_improvement = (avoided_loss / standard_yield) * 100
         else:
             percentage_improvement = 0.0
+        
+        # Run spatial analysis if location data is available
+        # This analyzes cropland viability in a 50km buffer around the location
+        spatial_analysis = None
+        if has_location and temp_increase != 0.0:
+            try:
+                import sys
+                print(f"[SPATIAL] Running spatial analysis for lat={location_lat}, lon={location_lon}, temp_increase={temp_increase}", file=sys.stderr, flush=True)
+                spatial_analysis = analyze_spatial_viability(location_lat, location_lon, temp_increase)
+                print(f"[SPATIAL] Complete: {spatial_analysis}", file=sys.stderr, flush=True)
+            except Exception as spatial_error:
+                import sys
+                print(f"Spatial analysis error: {spatial_error}", file=sys.stderr, flush=True)
+                spatial_analysis = None
         
         # Build chart_data if monthly data is available
         chart_data = None
@@ -360,6 +381,10 @@ def predict():
         # Add chart_data if available
         if chart_data is not None:
             response_data['chart_data'] = chart_data
+        
+        # Add spatial_analysis if available
+        if spatial_analysis is not None:
+            response_data['spatial_analysis'] = spatial_analysis
         
         return jsonify({
             'status': 'success',
