@@ -17,6 +17,7 @@ from gee_connector import get_weather_data, get_coastal_params, get_monthly_data
 from batch_processor import run_batch_job
 from physics_engine import simulate_maize_yield
 from coastal_engine import analyze_flood_risk, analyze_urban_impact
+from flood_engine import analyze_flash_flood
 
 app = Flask(__name__)
 # Enable CORS for all origins (Lovable uses multiple domains)
@@ -631,6 +632,71 @@ def predict_coastal_flood():
             'status': 'error',
             'message': f'Flood risk analysis failed: {str(e)}',
             'code': 'FLOOD_RISK_ERROR'
+        }), 500
+
+
+@app.route('/predict-flash-flood', methods=['POST'])
+@validate_json('lat', 'lon', 'rain_intensity_pct')
+def predict_flash_flood():
+    """Predict flash flood risk using Topographic Wetness Index (TWI) model."""
+    try:
+        data = request.get_json()
+        lat = float(data['lat'])
+        lon = float(data['lon'])
+        rain_intensity_pct = float(data['rain_intensity_pct'])
+        
+        # Log the request for debugging
+        import sys
+        print(f"[FLASH FLOOD REQUEST] lat={lat}, lon={lon}, rain_intensity_pct={rain_intensity_pct}", file=sys.stderr, flush=True)
+        
+        # Validate coordinates
+        if not (-90 <= lat <= 90):
+            return jsonify({
+                'status': 'error',
+                'message': 'Latitude must be between -90 and 90',
+                'code': 'INVALID_LATITUDE'
+            }), 400
+        
+        if not (-180 <= lon <= 180):
+            return jsonify({
+                'status': 'error',
+                'message': 'Longitude must be between -180 and 180',
+                'code': 'INVALID_LONGITUDE'
+            }), 400
+        
+        if rain_intensity_pct < 0:
+            return jsonify({
+                'status': 'error',
+                'message': 'Rain intensity increase must be non-negative',
+                'code': 'INVALID_RAIN_INTENSITY'
+            }), 400
+        
+        # Call flash flood engine to analyze TWI-based flood risk
+        flash_flood_analysis = analyze_flash_flood(lat, lon, rain_intensity_pct)
+        
+        return jsonify({
+            'status': 'success',
+            'data': {
+                'input_conditions': {
+                    'lat': lat,
+                    'lon': lon,
+                    'rain_intensity_increase_pct': rain_intensity_pct
+                },
+                'flash_flood_analysis': flash_flood_analysis
+            }
+        }), 200
+    
+    except ValueError:
+        return jsonify({
+            'status': 'error',
+            'message': 'Invalid numeric values for lat/lon/rain_intensity_pct',
+            'code': 'INVALID_NUMERIC_VALUE'
+        }), 400
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': f'Flash flood analysis failed: {str(e)}',
+            'code': 'FLASH_FLOOD_ERROR'
         }), 500
 
 
