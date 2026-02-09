@@ -178,3 +178,112 @@ def calculate_rainfall_frequency(intensity_increase_pct: float) -> dict:
     return {
         'rain_chart_data': rain_chart_data
     }
+
+
+def analyze_infrastructure_risk(lat: float, lon: float, rain_intensity_pct: float) -> dict:
+    """
+    Analyze infrastructure flood risk using TWI-based flood mask and urban areas.
+    
+    Identifies built-up areas at risk of flash flooding based on topographic
+    wetness index and rainfall intensity projections.
+    
+    Args:
+        lat: Latitude
+        lon: Longitude
+        rain_intensity_pct: Percentage increase in rainfall intensity (e.g., 20 for +20%)
+    
+    Returns:
+        Dictionary with:
+        - 'infrastructure_risk': Dict containing total_km2, flooded_km2, risk_pct
+    """
+    authenticate_gee()
+    
+    # Create 50km buffer around the point
+    point = ee.Geometry.Point([lon, lat])
+    buffer = point.buffer(50000)  # 50km in meters
+    
+    # Load NASA SRTM elevation data (90m resolution)
+    elevation = ee.Image('USGS/SRTMGL1_003').select('elevation')
+    
+    # Calculate slope in degrees
+    slope = ee.Terrain.slope(elevation)
+    
+    # Calculate flow accumulation using terrain analysis
+    filled = elevation.focal_max(radius=90, units='meters', iterations=3)
+    flow_accumulation = elevation.focal_median(radius=500, units='meters')
+    flow_accumulation = flow_accumulation.subtract(elevation).abs().add(1)
+    
+    # Calculate TWI (Topographic Wetness Index)
+    slope_radians = slope.multiply(math.pi / 180)
+    tan_slope = slope_radians.tan().add(0.001)
+    flow_acc_normalized = flow_accumulation.divide(100).add(1)
+    twi = flow_acc_normalized.divide(tan_slope).log()
+    
+    # Baseline threshold and scaling factor (from analyze_flash_flood)
+    BASELINE_THRESHOLD = 12.0
+    SCALING_FACTOR = 0.07
+    
+    # Calculate dynamic threshold based on rain intensity increase
+    dynamic_threshold = BASELINE_THRESHOLD * (1 - (rain_intensity_pct / 100 * SCALING_FACTOR))
+    
+    # Create flood mask using TWI threshold
+    flood_mask = twi.gte(dynamic_threshold)
+    
+    # Load ESA WorldCover 10m land cover dataset
+    # Class 50 = Built-up
+    land_cover = ee.ImageCollection('ESA/WorldCover/v200') \
+        .first() \
+        .select('Map')
+    
+    # Create built-up area mask (value 50 = Built-up)
+    urban_mask = land_cover.eq(50)
+    
+    # Create intersection: urban areas that are flooded
+    flooded_urban_mask = urban_mask.And(flood_mask)
+    
+    # Calculate pixel areas in square meters
+    pixel_area = ee.Image.pixelArea()
+    
+    # Calculate total urban area
+    total_urban_area_m2 = urban_mask.multiply(pixel_area).reduceRegion(
+        reducer=ee.Reducer.sum(),
+        geometry=buffer,
+        scale=100,  # 100m resolution for faster processing
+        maxPixels=1e9
+    ).get('Map')
+    
+    # Calculate flooded urban area
+    flooded_urban_area_m2 = flooded_urban_mask.multiply(pixel_area).reduceRegion(
+        reducer=ee.Reducer.sum(),
+        geometry=buffer,
+        scale=100,
+        maxPixels=1e9
+    ).get('Map')
+    
+    # Convert to Python values
+    total_urban_area_m2 = ee.Number(total_urban_area_m2).getInfo()
+    flooded_urban_area_m2 = ee.Number(flooded_urban_area_m2).getInfo()
+    
+    # Handle None values (no urban area found)
+    if total_urban_area_m2 is None:
+        total_urban_area_m2 = 0.0
+    if flooded_urban_area_m2 is None:
+        flooded_urban_area_m2 = 0.0
+    
+    # Convert from square meters to square kilometers
+    total_km2 = total_urban_area_m2 / 1_000_000
+    flooded_km2 = flooded_urban_area_m2 / 1_000_000
+    
+    # Calculate risk percentage
+    if total_km2 > 0:
+        risk_pct = (flooded_km2 / total_km2) * 100
+    else:
+        risk_pct = 0.0
+    
+    return {
+        'infrastructure_risk': {
+            'total_km2': round(total_km2, 2),
+            'flooded_km2': round(flooded_km2, 2),
+            'risk_pct': round(risk_pct, 2)
+        }
+    }
