@@ -17,7 +17,7 @@ from gee_connector import get_weather_data, get_coastal_params, get_monthly_data
 from batch_processor import run_batch_job
 from physics_engine import simulate_maize_yield
 from coastal_engine import analyze_flood_risk, analyze_urban_impact
-from flood_engine import analyze_flash_flood, calculate_rainfall_frequency
+from flood_engine import analyze_flash_flood, calculate_rainfall_frequency, analyze_infrastructure_risk
 
 app = Flask(__name__)
 # Enable CORS for all origins (Lovable uses multiple domains)
@@ -677,17 +677,37 @@ def predict_flash_flood():
         # Call rainfall frequency analytics
         rainfall_frequency = calculate_rainfall_frequency(rain_intensity_pct)
         
+        # Call infrastructure risk analysis (spatial analysis)
+        # This may take 2-3 seconds due to GEE processing
+        spatial_analysis = None
+        try:
+            import sys
+            print(f"[SPATIAL] Running infrastructure risk analysis for lat={lat}, lon={lon}, rain_intensity={rain_intensity_pct}%", file=sys.stderr, flush=True)
+            spatial_analysis = analyze_infrastructure_risk(lat, lon, rain_intensity_pct)
+            print(f"[SPATIAL] Complete: {spatial_analysis}", file=sys.stderr, flush=True)
+        except Exception as spatial_error:
+            import sys
+            print(f"Infrastructure risk analysis error: {spatial_error}", file=sys.stderr, flush=True)
+            spatial_analysis = None
+        
+        # Build response data
+        response_data = {
+            'input_conditions': {
+                'lat': lat,
+                'lon': lon,
+                'rain_intensity_increase_pct': rain_intensity_pct
+            },
+            'flash_flood_analysis': flash_flood_analysis,
+            'analytics': rainfall_frequency
+        }
+        
+        # Add spatial_analysis if available
+        if spatial_analysis is not None:
+            response_data['spatial_analysis'] = spatial_analysis
+        
         return jsonify({
             'status': 'success',
-            'data': {
-                'input_conditions': {
-                    'lat': lat,
-                    'lon': lon,
-                    'rain_intensity_increase_pct': rain_intensity_pct
-                },
-                'flash_flood_analysis': flash_flood_analysis,
-                'analytics': rainfall_frequency
-            }
+            'data': response_data
         }), 200
     
     except ValueError:
