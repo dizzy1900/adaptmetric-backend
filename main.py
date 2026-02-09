@@ -18,6 +18,7 @@ from batch_processor import run_batch_job
 from physics_engine import simulate_maize_yield
 from coastal_engine import analyze_flood_risk, analyze_urban_impact
 from flood_engine import analyze_flash_flood, calculate_rainfall_frequency, analyze_infrastructure_risk
+from financial_engine import calculate_roi_metrics
 
 app = Flask(__name__)
 # Enable CORS for all origins (Lovable uses multiple domains)
@@ -964,6 +965,87 @@ def start_batch():
             'status': 'error',
             'message': f'Failed to start batch job: {str(e)}',
             'code': 'BATCH_START_ERROR'
+        }), 500
+
+
+@app.route('/calculate-financials', methods=['POST'])
+def calculate_financials():
+    """
+    Calculate financial metrics (NPV, BCR, Payback Period) from cash flows.
+    
+    This is a utility endpoint for testing financial calculations in the UI.
+    """
+    if not request.is_json:
+        return jsonify({
+            'status': 'error',
+            'message': 'Request must be JSON',
+            'code': 'INVALID_CONTENT_TYPE'
+        }), 400
+    
+    try:
+        data = request.get_json()
+        
+        # Validate required fields
+        if 'cash_flows' not in data or 'discount_rate' not in data:
+            return jsonify({
+                'status': 'error',
+                'message': 'Missing required fields: cash_flows and discount_rate',
+                'code': 'MISSING_FIELDS'
+            }), 400
+        
+        cash_flows = data['cash_flows']
+        discount_rate = float(data['discount_rate'])
+        
+        # Validate cash_flows is a list
+        if not isinstance(cash_flows, list) or len(cash_flows) < 2:
+            return jsonify({
+                'status': 'error',
+                'message': 'cash_flows must be a list with at least 2 values',
+                'code': 'INVALID_CASH_FLOWS'
+            }), 400
+        
+        # Convert all cash flows to float
+        cash_flows = [float(cf) for cf in cash_flows]
+        
+        # Validate discount rate
+        if not (0 <= discount_rate <= 1.0):
+            return jsonify({
+                'status': 'error',
+                'message': 'discount_rate must be between 0.0 and 1.0 (e.g., 0.10 for 10%)',
+                'code': 'INVALID_DISCOUNT_RATE'
+            }), 400
+        
+        # Calculate financial metrics
+        metrics = calculate_roi_metrics(cash_flows, discount_rate)
+        
+        return jsonify({
+            'status': 'success',
+            'data': {
+                'input': {
+                    'cash_flows': cash_flows,
+                    'discount_rate': discount_rate,
+                    'discount_rate_pct': round(discount_rate * 100, 2)
+                },
+                'metrics': metrics,
+                'interpretation': {
+                    'npv_positive': metrics['npv'] > 0,
+                    'bcr_favorable': metrics['bcr'] > 1.0,
+                    'recommendation': 'INVEST' if metrics['npv'] > 0 and metrics['bcr'] > 1.0 else 'DO NOT INVEST'
+                }
+            }
+        }), 200
+    
+    except ValueError as ve:
+        return jsonify({
+            'status': 'error',
+            'message': f'Invalid numeric values: {str(ve)}',
+            'code': 'INVALID_NUMERIC_VALUE'
+        }), 400
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': f'Financial calculation failed: {str(e)}',
+            'code': 'CALCULATION_ERROR'
         }), 500
 
 
