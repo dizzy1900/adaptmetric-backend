@@ -18,7 +18,7 @@ from batch_processor import run_batch_job
 from physics_engine import simulate_maize_yield
 from coastal_engine import analyze_flood_risk, analyze_urban_impact
 from flood_engine import analyze_flash_flood, calculate_rainfall_frequency, analyze_infrastructure_risk
-from financial_engine import calculate_roi_metrics
+from financial_engine import calculate_roi_metrics, calculate_npv, calculate_payback_period
 
 app = Flask(__name__)
 # Enable CORS for all origins (Lovable uses multiple domains)
@@ -304,6 +304,79 @@ def predict():
         else:
             percentage_improvement = 0.0
         
+        # Financial ROI Analysis (optional)
+        # Get project parameters with research-based defaults
+        project_params = data.get('project_params', {})
+        capex = float(project_params.get('capex', 2000))
+        opex = float(project_params.get('opex', 425))
+        yield_benefit_pct = float(project_params.get('yield_benefit_pct', 30.0))
+        price_per_ton = float(project_params.get('price_per_ton', 4800))
+        analysis_years = 10
+        discount_rate = 0.10  # 10% discount rate
+        
+        # Calculate Agricultural ROI
+        # Baseline (Business as Usual): Standard seed, no project
+        predicted_yield_tons = standard_yield
+        
+        # Generate 10-year cash flows
+        incremental_cash_flows = []
+        cumulative_cash_flow_array = []
+        cumulative = 0.0
+        
+        for year in range(analysis_years + 1):  # 0 to 10 (11 years)
+            # Baseline revenue (doing nothing - standard seed)
+            revenue_bau = predicted_yield_tons * price_per_ton
+            net_bau = revenue_bau  # No extra cost for BAU
+            
+            # Project revenue (resilient seed with yield benefit)
+            yield_project = resilient_yield * (1 + (yield_benefit_pct / 100))
+            revenue_project = yield_project * price_per_ton
+            
+            # Project costs
+            if year == 0:
+                # Year 0: CAPEX initial investment
+                cost_project = capex
+            else:
+                # Year 1+: OPEX annual maintenance
+                cost_project = opex
+            
+            # Net project cash flow
+            net_project = revenue_project - cost_project
+            
+            # Incremental cash flow (delta)
+            incremental = net_project - net_bau
+            
+            # Year 0 is pure CAPEX (negative), no revenue yet
+            if year == 0:
+                incremental = -capex
+            
+            incremental_cash_flows.append(round(incremental, 2))
+            
+            # Cumulative cash flow
+            cumulative += incremental
+            cumulative_cash_flow_array.append(round(cumulative, 2))
+        
+        # Calculate NPV using financial engine
+        npv = calculate_npv(incremental_cash_flows, discount_rate)
+        
+        # Calculate payback period
+        payback_years = calculate_payback_period(incremental_cash_flows)
+        
+        roi_analysis = {
+            'npv': round(npv, 2),
+            'payback_years': round(payback_years, 2) if payback_years is not None else None,
+            'cumulative_cash_flow': cumulative_cash_flow_array,
+            'incremental_cash_flows': incremental_cash_flows,
+            'assumptions': {
+                'capex': capex,
+                'opex': opex,
+                'yield_benefit_pct': yield_benefit_pct,
+                'price_per_ton': price_per_ton,
+                'discount_rate_pct': discount_rate * 100,
+                'analysis_years': analysis_years
+            }
+        }
+        
         # Run spatial analysis if location data is available
         # This analyzes cropland viability in a 50km buffer around the location
         spatial_analysis = None
@@ -388,6 +461,10 @@ def predict():
         # Add spatial_analysis if available
         if spatial_analysis is not None:
             response_data['spatial_analysis'] = spatial_analysis
+        
+        # Add roi_analysis (always included)
+        if roi_analysis is not None:
+            response_data['roi_analysis'] = roi_analysis
         
         return jsonify({
             'status': 'success',
