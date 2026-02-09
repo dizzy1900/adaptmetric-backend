@@ -17,7 +17,7 @@ from gee_connector import get_weather_data, get_coastal_params, get_monthly_data
 from batch_processor import run_batch_job
 from physics_engine import simulate_maize_yield
 from coastal_engine import analyze_flood_risk, analyze_urban_impact
-from flood_engine import analyze_flash_flood
+from flood_engine import analyze_flash_flood, calculate_rainfall_frequency
 
 app = Flask(__name__)
 # Enable CORS for all origins (Lovable uses multiple domains)
@@ -674,6 +674,9 @@ def predict_flash_flood():
         # Call flash flood engine to analyze TWI-based flood risk
         flash_flood_analysis = analyze_flash_flood(lat, lon, rain_intensity_pct)
         
+        # Call rainfall frequency analytics
+        rainfall_frequency = calculate_rainfall_frequency(rain_intensity_pct)
+        
         return jsonify({
             'status': 'success',
             'data': {
@@ -682,7 +685,8 @@ def predict_flash_flood():
                     'lon': lon,
                     'rain_intensity_increase_pct': rain_intensity_pct
                 },
-                'flash_flood_analysis': flash_flood_analysis
+                'flash_flood_analysis': flash_flood_analysis,
+                'analytics': rainfall_frequency
             }
         }), 200
     
