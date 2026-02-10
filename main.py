@@ -757,6 +757,60 @@ def predict_coastal_flood():
         if infrastructure_roi is not None:
             response_data['infrastructure_roi'] = infrastructure_roi
         
+        # Social Impact Analysis (optional)
+        impact_metrics = None
+        if 'social_params' in data or infrastructure_roi is not None:
+            try:
+                from social_impact_engine import analyze_beneficiaries, calculate_nature_value, calculate_social_metrics
+                
+                # Analyze beneficiaries (population at risk)
+                buffer_km = 5.0  # 5km buffer for coastal areas
+                beneficiaries = analyze_beneficiaries(lat, lon, buffer_km, flood_mask=None)
+                
+                # Calculate nature-based solution value if applicable
+                nature_value = None
+                if 'social_params' in data:
+                    social_params = data['social_params']
+                    intervention_type = social_params.get('intervention_type', '')
+                    area_hectares = float(social_params.get('area_hectares', 0))
+                    
+                    if area_hectares > 0:
+                        nature_value = calculate_nature_value(intervention_type, area_hectares)
+                
+                # Calculate social metrics if we have intervention cost
+                social_metrics = None
+                if infrastructure_roi is not None:
+                    intervention_cost = infrastructure_roi['financial_analysis']['project_capex']
+                    social_metrics = calculate_social_metrics(
+                        people_at_risk=beneficiaries['people_at_risk'],
+                        households_at_risk=beneficiaries['households_at_risk'],
+                        intervention_cost=intervention_cost,
+                        nature_value=nature_value
+                    )
+                
+                # Build impact metrics
+                impact_metrics = {
+                    'beneficiaries': beneficiaries
+                }
+                
+                if nature_value is not None:
+                    impact_metrics['nature_value'] = nature_value
+                
+                if social_metrics is not None:
+                    impact_metrics['social_metrics'] = social_metrics
+                
+                import sys
+                print(f"[SOCIAL IMPACT] Beneficiaries: {beneficiaries['people_at_risk']} people, {beneficiaries['households_at_risk']} households", file=sys.stderr, flush=True)
+                
+            except Exception as social_error:
+                import sys
+                print(f"Social impact analysis error: {social_error}", file=sys.stderr, flush=True)
+                impact_metrics = None
+        
+        # Add impact_metrics if available
+        if impact_metrics is not None:
+            response_data['impact_metrics'] = impact_metrics
+        
         return jsonify({
             'status': 'success',
             'data': response_data
@@ -897,6 +951,60 @@ def predict_flash_flood():
         # Add infrastructure_roi if available
         if infrastructure_roi is not None:
             response_data['infrastructure_roi'] = infrastructure_roi
+        
+        # Social Impact Analysis (optional)
+        impact_metrics = None
+        if 'social_params' in data or infrastructure_roi is not None:
+            try:
+                from social_impact_engine import analyze_beneficiaries, calculate_nature_value, calculate_social_metrics
+                
+                # Analyze beneficiaries (population at risk)
+                buffer_km = 50.0  # 50km buffer for flash flood watersheds
+                beneficiaries = analyze_beneficiaries(lat, lon, buffer_km, flood_mask=None)
+                
+                # Calculate nature-based solution value if applicable
+                nature_value = None
+                if 'social_params' in data:
+                    social_params = data['social_params']
+                    intervention_type = social_params.get('intervention_type', '')
+                    area_hectares = float(social_params.get('area_hectares', 0))
+                    
+                    if area_hectares > 0:
+                        nature_value = calculate_nature_value(intervention_type, area_hectares)
+                
+                # Calculate social metrics if we have intervention cost
+                social_metrics = None
+                if infrastructure_roi is not None:
+                    intervention_cost = infrastructure_roi['financial_analysis']['project_capex']
+                    social_metrics = calculate_social_metrics(
+                        people_at_risk=beneficiaries['people_at_risk'],
+                        households_at_risk=beneficiaries['households_at_risk'],
+                        intervention_cost=intervention_cost,
+                        nature_value=nature_value
+                    )
+                
+                # Build impact metrics
+                impact_metrics = {
+                    'beneficiaries': beneficiaries
+                }
+                
+                if nature_value is not None:
+                    impact_metrics['nature_value'] = nature_value
+                
+                if social_metrics is not None:
+                    impact_metrics['social_metrics'] = social_metrics
+                
+                import sys
+                print(f"[SOCIAL IMPACT] Beneficiaries: {beneficiaries['people_at_risk']} people, {beneficiaries['households_at_risk']} households", file=sys.stderr, flush=True)
+                
+            except Exception as social_error:
+                import sys
+                print(f"Social impact analysis error: {social_error}", file=sys.stderr, flush=True)
+                impact_metrics = None
+        
+        # Add impact_metrics if available
+        if impact_metrics is not None:
+            response_data['impact_metrics'] = impact_metrics
         
         return jsonify({
             'status': 'success',
