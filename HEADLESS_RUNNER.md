@@ -302,9 +302,23 @@ The headless runner:
 | **Use case** | Automation, batch jobs | Web frontend, interactive |
 | **Concurrent requests** | Multiple processes | Single server, multiple threads |
 
+## Google Earth Engine Credentials
+
+The headless runner can use real GEE data if credentials are configured. See **[CREDENTIALS_SETUP.md](CREDENTIALS_SETUP.md)** for detailed setup instructions.
+
+**Quick setup:**
+- **Cloud Agents:** Set `WARP_GEE_CREDENTIALS` secret in Factory
+- **Local dev:** Place `credentials.json` in `~/.adaptmetric/`
+- **Testing:** Use `--use-mock-data` flag (no credentials needed)
+
+Check credential status:
+```bash
+python gee_credentials.py
+```
+
 ## Limitations
 
-1. **No Google Earth Engine** - Uses fallback weather data by default (unless GEE credentials configured)
+1. **Google Earth Engine** - Requires credentials or use `--use-mock-data` for testing
 2. **No spatial analysis** - Simplified analysis compared to full GEE-enabled API
 3. **No database** - No persistence of results
 4. **Single calculation per run** - No batch endpoint (use shell scripting for batches)

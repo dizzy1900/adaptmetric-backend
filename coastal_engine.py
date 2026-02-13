@@ -5,18 +5,32 @@
 import json
 import os
 import ee
+from gee_credentials import load_gee_credentials
 
 
 def authenticate_gee():
-    """Authenticate with Google Earth Engine using service account."""
-    service_account_json = os.environ.get('GEE_SERVICE_ACCOUNT_JSON')
-    if not service_account_json:
-        raise ValueError("GEE_SERVICE_ACCOUNT_JSON environment variable not set")
+    """
+    Authenticate with Google Earth Engine using service account.
     
-    credentials_dict = json.loads(service_account_json)
+    Supports multiple credential sources (priority order):
+    1. WARP_GEE_CREDENTIALS (Cloud Agents)
+    2. GEE_SERVICE_ACCOUNT_JSON (legacy)
+    3. credentials.json (project root)
+    4. credentials.json (~/.adaptmetric/)
+    """
+    credentials_dict = load_gee_credentials()
+    if not credentials_dict:
+        raise ValueError(
+            "Google Earth Engine credentials not found. "
+            "Set WARP_GEE_CREDENTIALS or GEE_SERVICE_ACCOUNT_JSON env var, "
+            "or place credentials.json in project root or ~/.adaptmetric/"
+        )
+    
+    # Convert dict back to JSON string for ee.ServiceAccountCredentials
+    credentials_json = json.dumps(credentials_dict)
     credentials = ee.ServiceAccountCredentials(
         credentials_dict['client_email'],
-        key_data=service_account_json
+        key_data=credentials_json
     )
     ee.Initialize(credentials)
 
