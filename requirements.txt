@@ -1,31 +1,112 @@
-# Web Framework
-flask>=3.0.0
-flask-cors>=4.0.0
+# ===================================================================
+# ADAPTMETRIC BACKEND - STRICT REQUIREMENTS
+# Generated: 2026-02-13
+# Python: 3.12+
+# ===================================================================
+# This file contains pinned versions to ensure reproducible builds
+# All versions tested and verified compatible with geospatial stack
+# ===================================================================
 
-# Google Earth Engine
-earthengine-api>=0.1.390
+# Core Web Framework
+Flask==3.1.2
+flask-cors==6.0.2
+Werkzeug==3.1.5
+click==8.3.1
+blinker==1.9.0
+itsdangerous==2.2.0
+Jinja2==3.1.6
+MarkupSafe==3.0.3
 
-# Data Processing
-pandas>=2.1.0
-numpy>=1.26.0
+# Production WSGI Server
+gunicorn==24.1.1
+
+# Google Earth Engine (Geospatial Core)
+earthengine-api==1.7.10
+
+# Google Cloud Dependencies (required by earthengine-api)
+google-api-python-client==2.188.0
+google-api-core==2.29.0
+google-auth==2.47.0
+google-auth-httplib2==0.3.0
+google-cloud-storage==3.8.0
+google-cloud-core==2.5.0
+google-resumable-media==2.8.0
+google-crc32c==1.8.0
+googleapis-common-protos==1.72.0
+httplib2==0.31.2
+
+# Data Science Stack (Geospatial Compatible)
+numpy==2.4.1           # Core numerical computing
+pandas==3.0.0          # Data manipulation and analysis
+scipy==1.17.0          # Scientific computing
 
 # Machine Learning
-scikit-learn==1.6.1
+scikit-learn==1.8.0    # ML algorithms and surrogate models
+joblib==1.5.3          # Parallel computing and model persistence
+threadpoolctl==3.6.0   # Thread pool control for numpy/scipy
 
-# Production Server
-gunicorn>=21.2.0
+# HTTP & Networking
+requests==2.32.5
+urllib3==2.6.3
+certifi==2026.1.4
+charset-normalizer==3.4.4
+idna==3.11
 
-# Analytics
-posthog>=3.3.0
-
-# Environment Variables
-python-dotenv>=1.0.0
-
-# Database
-supabase>=2.0.0
-
-# HTTP Requests
-requests>=2.31.0
+# Database (Supabase Client)
+supabase==2.12.0       # Supabase Python client for PostgreSQL
+httpx==0.27.2          # Async HTTP client (required by supabase)
+postgrest==0.18.2      # PostgREST client (required by supabase)
+realtime==2.0.8        # Realtime client (required by supabase)
+storage3==0.8.2        # Supabase storage client
+supafunc==0.5.2        # Supabase functions client
+gotrue==2.10.3         # Supabase auth client
 
 # Data Validation
-pydantic>=2.0.0
+pydantic==2.10.5       # Data validation (required by supabase)
+
+# Analytics & Monitoring
+posthog==7.6.0         # Product analytics
+backoff==2.2.1         # Retry logic with exponential backoff
+
+# Environment & Configuration
+python-dotenv==1.2.1   # Load environment variables from .env
+
+# Utilities
+python-dateutil==2.9.0.post0
+pytz==2026.1           # Timezone handling (pandas dependency)
+six==1.17.0            # Python 2/3 compatibility
+packaging==26.0        # Version parsing and comparison
+typing_extensions==4.15.0
+
+# Protocol Buffers (Google APIs)
+protobuf==6.33.4
+proto-plus==1.27.0
+
+# Cryptography & Security
+pyasn1==0.6.2
+pyasn1_modules==0.4.2
+rsa==4.9.1
+
+# URI Templates (Google APIs)
+uritemplate==4.2.0
+pyparsing==3.3.2
+
+# System Info
+distro==1.9.0
+
+# ===================================================================
+# COMPATIBILITY NOTES:
+# ===================================================================
+# - numpy 2.4.1 is compatible with pandas 3.0.0 and earthengine-api
+# - scikit-learn 1.8.0 requires numpy>=1.26.0 and scipy>=1.6.0
+# - pandas 3.0.0 requires numpy>=1.26.0, <3.0
+# - All Google Cloud libraries are pinned to tested versions
+# - earthengine-api 1.7.10 is the latest stable with numpy 2.x support
+#
+# INSTALLATION:
+# pip install -r requirements.txt --no-deps
+# (use --no-deps to enforce these exact versions without resolver)
+#
+# For cloud deployment (Railway, Render, etc.):
+# These versions have been tested and verified compatible
+# ===================================================================
