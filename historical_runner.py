@@ -31,20 +31,6 @@ def _clamp(value: float, lo: float, hi: float) -> float:
     return max(lo, min(hi, value))
 
 
-def _seed_everything(seed: int) -> None:
-    """Seed python (and numpy if installed) for determinism."""
-
-    random.seed(seed)
-
-    try:
-        import numpy as np  # type: ignore
-
-        # numpy requires 0 <= seed < 2**32
-        np.random.seed(seed % (2**32 - 1))
-    except Exception:
-        # numpy is optional
-        pass
-
 
 def _baseline_climate_from_lat(lat: float) -> tuple[float, float]:
     """Very simple climate-zone baseline (temp_c, rain_mm) derived from latitude."""
@@ -85,17 +71,27 @@ def _generate_historical_climate(*, lat: float, lon: float, year: int, crop_type
     """Generate (temp_c, rain_mm) deterministically based on (lat, lon, year).
 
     Crucial determinism requirement:
-      seed = int(year * lat)
+      seed = year * lat
 
     We intentionally only use pseudo-randomness *after* seeding, so the output is
     stable for a given year/location.
     """
 
     # Deterministic seed, as requested.
-    seed = int(year * lat)
-    _seed_everything(seed)
+    seed = year * lat
 
+    # Use a dedicated RNG seeded from year * lat for determinism.
     rng = random.Random(seed)
+
+    # If numpy is available, seed it too (needs an int seed).
+    # We derive a stable int from the float seed without changing the core
+    # determinism requirement.
+    try:
+        import numpy as np  # type: ignore
+
+        np.random.seed(int(abs(seed) * 1_000_000) % (2**32 - 1))
+    except Exception:
+        pass
 
     base_temp_c, base_rain_mm = _baseline_climate_from_lat(lat)
     crop_temp_delta, crop_rain_delta = _crop_baseline_adjustments(crop_type)
