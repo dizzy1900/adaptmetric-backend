@@ -72,7 +72,7 @@ supafunc==0.9.4        # Supabase functions client (required <0.10,>=0.9)
 gotrue==2.11.0         # Supabase auth client (required <3.0.0,>=2.11.0)
 
 # Data Validation
-pydantic==2.6.0        # Data validation
+pydantic>=2.11.7        # Data validation
 pydantic-core==2.16.1  # Core validation logic for pydantic
 annotated-types==0.6.0 # Type annotations for pydantic
 typing-inspection==0.4.2  # Type inspection utilities for pydantic
