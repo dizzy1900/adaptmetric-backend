@@ -1,0 +1,1402 @@
+[
+  {
+    "year": 2004,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": -12.5425,
+      "lon": -55.7217
+    },
+    "target": {
+      "name": "Brazil",
+      "crop_type": "soy",
+      "lat": -12.5425,
+      "lon": -55.7217
+    }
+  },
+  {
+    "year": 2005,
+    "yield_pct": 72.15,
+    "location": {
+      "lat": -12.5425,
+      "lon": -55.7217
+    },
+    "target": {
+      "name": "Brazil",
+      "crop_type": "soy",
+      "lat": -12.5425,
+      "lon": -55.7217
+    }
+  },
+  {
+    "year": 2006,
+    "yield_pct": 98.66,
+    "location": {
+      "lat": -12.5425,
+      "lon": -55.7217
+    },
+    "target": {
+      "name": "Brazil",
+      "crop_type": "soy",
+      "lat": -12.5425,
+      "lon": -55.7217
+    }
+  },
+  {
+    "year": 2007,
+    "yield_pct": 65.92,
+    "location": {
+      "lat": -12.5425,
+      "lon": -55.7217
+    },
+    "target": {
+      "name": "Brazil",
+      "crop_type": "soy",
+      "lat": -12.5425,
+      "lon": -55.7217
+    }
+  },
+  {
+    "year": 2008,
+    "yield_pct": 91.97,
+    "location": {
+      "lat": -12.5425,
+      "lon": -55.7217
+    },
+    "target": {
+      "name": "Brazil",
+      "crop_type": "soy",
+      "lat": -12.5425,
+      "lon": -55.7217
+    }
+  },
+  {
+    "year": 2009,
+    "yield_pct": 38.11,
+    "location": {
+      "lat": -12.5425,
+      "lon": -55.7217
+    },
+    "target": {
+      "name": "Brazil",
+      "crop_type": "soy",
+      "lat": -12.5425,
+      "lon": -55.7217
+    }
+  },
+  {
+    "year": 2010,
+    "yield_pct": 94.89,
+    "location": {
+      "lat": -12.5425,
+      "lon": -55.7217
+    },
+    "target": {
+      "name": "Brazil",
+      "crop_type": "soy",
+      "lat": -12.5425,
+      "lon": -55.7217
+    }
+  },
+  {
+    "year": 2011,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": -12.5425,
+      "lon": -55.7217
+    },
+    "target": {
+      "name": "Brazil",
+      "crop_type": "soy",
+      "lat": -12.5425,
+      "lon": -55.7217
+    }
+  },
+  {
+    "year": 2012,
+    "yield_pct": 39.04,
+    "location": {
+      "lat": -12.5425,
+      "lon": -55.7217
+    },
+    "target": {
+      "name": "Brazil",
+      "crop_type": "soy",
+      "lat": -12.5425,
+      "lon": -55.7217
+    }
+  },
+  {
+    "year": 2013,
+    "yield_pct": 84.61,
+    "location": {
+      "lat": -12.5425,
+      "lon": -55.7217
+    },
+    "target": {
+      "name": "Brazil",
+      "crop_type": "soy",
+      "lat": -12.5425,
+      "lon": -55.7217
+    }
+  },
+  {
+    "year": 2014,
+    "yield_pct": 80.7,
+    "location": {
+      "lat": -12.5425,
+      "lon": -55.7217
+    },
+    "target": {
+      "name": "Brazil",
+      "crop_type": "soy",
+      "lat": -12.5425,
+      "lon": -55.7217
+    }
+  },
+  {
+    "year": 2015,
+    "yield_pct": 96.85,
+    "location": {
+      "lat": -12.5425,
+      "lon": -55.7217
+    },
+    "target": {
+      "name": "Brazil",
+      "crop_type": "soy",
+      "lat": -12.5425,
+      "lon": -55.7217
+    }
+  },
+  {
+    "year": 2016,
+    "yield_pct": 64.39,
+    "location": {
+      "lat": -12.5425,
+      "lon": -55.7217
+    },
+    "target": {
+      "name": "Brazil",
+      "crop_type": "soy",
+      "lat": -12.5425,
+      "lon": -55.7217
+    }
+  },
+  {
+    "year": 2017,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": -12.5425,
+      "lon": -55.7217
+    },
+    "target": {
+      "name": "Brazil",
+      "crop_type": "soy",
+      "lat": -12.5425,
+      "lon": -55.7217
+    }
+  },
+  {
+    "year": 2018,
+    "yield_pct": 56.05,
+    "location": {
+      "lat": -12.5425,
+      "lon": -55.7217
+    },
+    "target": {
+      "name": "Brazil",
+      "crop_type": "soy",
+      "lat": -12.5425,
+      "lon": -55.7217
+    }
+  },
+  {
+    "year": 2019,
+    "yield_pct": 96.7,
+    "location": {
+      "lat": -12.5425,
+      "lon": -55.7217
+    },
+    "target": {
+      "name": "Brazil",
+      "crop_type": "soy",
+      "lat": -12.5425,
+      "lon": -55.7217
+    }
+  },
+  {
+    "year": 2020,
+    "yield_pct": 81.21,
+    "location": {
+      "lat": -12.5425,
+      "lon": -55.7217
+    },
+    "target": {
+      "name": "Brazil",
+      "crop_type": "soy",
+      "lat": -12.5425,
+      "lon": -55.7217
+    }
+  },
+  {
+    "year": 2021,
+    "yield_pct": 54.72,
+    "location": {
+      "lat": -12.5425,
+      "lon": -55.7217
+    },
+    "target": {
+      "name": "Brazil",
+      "crop_type": "soy",
+      "lat": -12.5425,
+      "lon": -55.7217
+    }
+  },
+  {
+    "year": 2022,
+    "yield_pct": 72.54,
+    "location": {
+      "lat": -12.5425,
+      "lon": -55.7217
+    },
+    "target": {
+      "name": "Brazil",
+      "crop_type": "soy",
+      "lat": -12.5425,
+      "lon": -55.7217
+    }
+  },
+  {
+    "year": 2023,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": -12.5425,
+      "lon": -55.7217
+    },
+    "target": {
+      "name": "Brazil",
+      "crop_type": "soy",
+      "lat": -12.5425,
+      "lon": -55.7217
+    }
+  },
+  {
+    "year": 2004,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 6.7,
+      "lon": -1.6
+    },
+    "target": {
+      "name": "Ghana",
+      "crop_type": "cocoa",
+      "lat": 6.7,
+      "lon": -1.6
+    }
+  },
+  {
+    "year": 2005,
+    "yield_pct": 95.89,
+    "location": {
+      "lat": 6.7,
+      "lon": -1.6
+    },
+    "target": {
+      "name": "Ghana",
+      "crop_type": "cocoa",
+      "lat": 6.7,
+      "lon": -1.6
+    }
+  },
+  {
+    "year": 2006,
+    "yield_pct": 87.15,
+    "location": {
+      "lat": 6.7,
+      "lon": -1.6
+    },
+    "target": {
+      "name": "Ghana",
+      "crop_type": "cocoa",
+      "lat": 6.7,
+      "lon": -1.6
+    }
+  },
+  {
+    "year": 2007,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 6.7,
+      "lon": -1.6
+    },
+    "target": {
+      "name": "Ghana",
+      "crop_type": "cocoa",
+      "lat": 6.7,
+      "lon": -1.6
+    }
+  },
+  {
+    "year": 2008,
+    "yield_pct": 88.38,
+    "location": {
+      "lat": 6.7,
+      "lon": -1.6
+    },
+    "target": {
+      "name": "Ghana",
+      "crop_type": "cocoa",
+      "lat": 6.7,
+      "lon": -1.6
+    }
+  },
+  {
+    "year": 2009,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 6.7,
+      "lon": -1.6
+    },
+    "target": {
+      "name": "Ghana",
+      "crop_type": "cocoa",
+      "lat": 6.7,
+      "lon": -1.6
+    }
+  },
+  {
+    "year": 2010,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 6.7,
+      "lon": -1.6
+    },
+    "target": {
+      "name": "Ghana",
+      "crop_type": "cocoa",
+      "lat": 6.7,
+      "lon": -1.6
+    }
+  },
+  {
+    "year": 2011,
+    "yield_pct": 99.82,
+    "location": {
+      "lat": 6.7,
+      "lon": -1.6
+    },
+    "target": {
+      "name": "Ghana",
+      "crop_type": "cocoa",
+      "lat": 6.7,
+      "lon": -1.6
+    }
+  },
+  {
+    "year": 2012,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 6.7,
+      "lon": -1.6
+    },
+    "target": {
+      "name": "Ghana",
+      "crop_type": "cocoa",
+      "lat": 6.7,
+      "lon": -1.6
+    }
+  },
+  {
+    "year": 2013,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 6.7,
+      "lon": -1.6
+    },
+    "target": {
+      "name": "Ghana",
+      "crop_type": "cocoa",
+      "lat": 6.7,
+      "lon": -1.6
+    }
+  },
+  {
+    "year": 2014,
+    "yield_pct": 92.65,
+    "location": {
+      "lat": 6.7,
+      "lon": -1.6
+    },
+    "target": {
+      "name": "Ghana",
+      "crop_type": "cocoa",
+      "lat": 6.7,
+      "lon": -1.6
+    }
+  },
+  {
+    "year": 2015,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 6.7,
+      "lon": -1.6
+    },
+    "target": {
+      "name": "Ghana",
+      "crop_type": "cocoa",
+      "lat": 6.7,
+      "lon": -1.6
+    }
+  },
+  {
+    "year": 2016,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 6.7,
+      "lon": -1.6
+    },
+    "target": {
+      "name": "Ghana",
+      "crop_type": "cocoa",
+      "lat": 6.7,
+      "lon": -1.6
+    }
+  },
+  {
+    "year": 2017,
+    "yield_pct": 96.22,
+    "location": {
+      "lat": 6.7,
+      "lon": -1.6
+    },
+    "target": {
+      "name": "Ghana",
+      "crop_type": "cocoa",
+      "lat": 6.7,
+      "lon": -1.6
+    }
+  },
+  {
+    "year": 2018,
+    "yield_pct": 94.9,
+    "location": {
+      "lat": 6.7,
+      "lon": -1.6
+    },
+    "target": {
+      "name": "Ghana",
+      "crop_type": "cocoa",
+      "lat": 6.7,
+      "lon": -1.6
+    }
+  },
+  {
+    "year": 2019,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 6.7,
+      "lon": -1.6
+    },
+    "target": {
+      "name": "Ghana",
+      "crop_type": "cocoa",
+      "lat": 6.7,
+      "lon": -1.6
+    }
+  },
+  {
+    "year": 2020,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 6.7,
+      "lon": -1.6
+    },
+    "target": {
+      "name": "Ghana",
+      "crop_type": "cocoa",
+      "lat": 6.7,
+      "lon": -1.6
+    }
+  },
+  {
+    "year": 2021,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 6.7,
+      "lon": -1.6
+    },
+    "target": {
+      "name": "Ghana",
+      "crop_type": "cocoa",
+      "lat": 6.7,
+      "lon": -1.6
+    }
+  },
+  {
+    "year": 2022,
+    "yield_pct": 98.22,
+    "location": {
+      "lat": 6.7,
+      "lon": -1.6
+    },
+    "target": {
+      "name": "Ghana",
+      "crop_type": "cocoa",
+      "lat": 6.7,
+      "lon": -1.6
+    }
+  },
+  {
+    "year": 2023,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 6.7,
+      "lon": -1.6
+    },
+    "target": {
+      "name": "Ghana",
+      "crop_type": "cocoa",
+      "lat": 6.7,
+      "lon": -1.6
+    }
+  },
+  {
+    "year": 2004,
+    "yield_pct": 99.17,
+    "location": {
+      "lat": 41.5868,
+      "lon": -93.625
+    },
+    "target": {
+      "name": "Iowa, USA",
+      "crop_type": "maize",
+      "lat": 41.5868,
+      "lon": -93.625
+    }
+  },
+  {
+    "year": 2005,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 41.5868,
+      "lon": -93.625
+    },
+    "target": {
+      "name": "Iowa, USA",
+      "crop_type": "maize",
+      "lat": 41.5868,
+      "lon": -93.625
+    }
+  },
+  {
+    "year": 2006,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 41.5868,
+      "lon": -93.625
+    },
+    "target": {
+      "name": "Iowa, USA",
+      "crop_type": "maize",
+      "lat": 41.5868,
+      "lon": -93.625
+    }
+  },
+  {
+    "year": 2007,
+    "yield_pct": 97.56,
+    "location": {
+      "lat": 41.5868,
+      "lon": -93.625
+    },
+    "target": {
+      "name": "Iowa, USA",
+      "crop_type": "maize",
+      "lat": 41.5868,
+      "lon": -93.625
+    }
+  },
+  {
+    "year": 2008,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 41.5868,
+      "lon": -93.625
+    },
+    "target": {
+      "name": "Iowa, USA",
+      "crop_type": "maize",
+      "lat": 41.5868,
+      "lon": -93.625
+    }
+  },
+  {
+    "year": 2009,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 41.5868,
+      "lon": -93.625
+    },
+    "target": {
+      "name": "Iowa, USA",
+      "crop_type": "maize",
+      "lat": 41.5868,
+      "lon": -93.625
+    }
+  },
+  {
+    "year": 2010,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 41.5868,
+      "lon": -93.625
+    },
+    "target": {
+      "name": "Iowa, USA",
+      "crop_type": "maize",
+      "lat": 41.5868,
+      "lon": -93.625
+    }
+  },
+  {
+    "year": 2011,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 41.5868,
+      "lon": -93.625
+    },
+    "target": {
+      "name": "Iowa, USA",
+      "crop_type": "maize",
+      "lat": 41.5868,
+      "lon": -93.625
+    }
+  },
+  {
+    "year": 2012,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 41.5868,
+      "lon": -93.625
+    },
+    "target": {
+      "name": "Iowa, USA",
+      "crop_type": "maize",
+      "lat": 41.5868,
+      "lon": -93.625
+    }
+  },
+  {
+    "year": 2013,
+    "yield_pct": 87.46,
+    "location": {
+      "lat": 41.5868,
+      "lon": -93.625
+    },
+    "target": {
+      "name": "Iowa, USA",
+      "crop_type": "maize",
+      "lat": 41.5868,
+      "lon": -93.625
+    }
+  },
+  {
+    "year": 2014,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 41.5868,
+      "lon": -93.625
+    },
+    "target": {
+      "name": "Iowa, USA",
+      "crop_type": "maize",
+      "lat": 41.5868,
+      "lon": -93.625
+    }
+  },
+  {
+    "year": 2015,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 41.5868,
+      "lon": -93.625
+    },
+    "target": {
+      "name": "Iowa, USA",
+      "crop_type": "maize",
+      "lat": 41.5868,
+      "lon": -93.625
+    }
+  },
+  {
+    "year": 2016,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 41.5868,
+      "lon": -93.625
+    },
+    "target": {
+      "name": "Iowa, USA",
+      "crop_type": "maize",
+      "lat": 41.5868,
+      "lon": -93.625
+    }
+  },
+  {
+    "year": 2017,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 41.5868,
+      "lon": -93.625
+    },
+    "target": {
+      "name": "Iowa, USA",
+      "crop_type": "maize",
+      "lat": 41.5868,
+      "lon": -93.625
+    }
+  },
+  {
+    "year": 2018,
+    "yield_pct": 99.17,
+    "location": {
+      "lat": 41.5868,
+      "lon": -93.625
+    },
+    "target": {
+      "name": "Iowa, USA",
+      "crop_type": "maize",
+      "lat": 41.5868,
+      "lon": -93.625
+    }
+  },
+  {
+    "year": 2019,
+    "yield_pct": 43.87,
+    "location": {
+      "lat": 41.5868,
+      "lon": -93.625
+    },
+    "target": {
+      "name": "Iowa, USA",
+      "crop_type": "maize",
+      "lat": 41.5868,
+      "lon": -93.625
+    }
+  },
+  {
+    "year": 2020,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 41.5868,
+      "lon": -93.625
+    },
+    "target": {
+      "name": "Iowa, USA",
+      "crop_type": "maize",
+      "lat": 41.5868,
+      "lon": -93.625
+    }
+  },
+  {
+    "year": 2021,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 41.5868,
+      "lon": -93.625
+    },
+    "target": {
+      "name": "Iowa, USA",
+      "crop_type": "maize",
+      "lat": 41.5868,
+      "lon": -93.625
+    }
+  },
+  {
+    "year": 2022,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 41.5868,
+      "lon": -93.625
+    },
+    "target": {
+      "name": "Iowa, USA",
+      "crop_type": "maize",
+      "lat": 41.5868,
+      "lon": -93.625
+    }
+  },
+  {
+    "year": 2023,
+    "yield_pct": 75.69,
+    "location": {
+      "lat": 41.5868,
+      "lon": -93.625
+    },
+    "target": {
+      "name": "Iowa, USA",
+      "crop_type": "maize",
+      "lat": 41.5868,
+      "lon": -93.625
+    }
+  },
+  {
+    "year": 2004,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 49.0,
+      "lon": 31.0
+    },
+    "target": {
+      "name": "Ukraine",
+      "crop_type": "wheat",
+      "lat": 49.0,
+      "lon": 31.0
+    }
+  },
+  {
+    "year": 2005,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 49.0,
+      "lon": 31.0
+    },
+    "target": {
+      "name": "Ukraine",
+      "crop_type": "wheat",
+      "lat": 49.0,
+      "lon": 31.0
+    }
+  },
+  {
+    "year": 2006,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 49.0,
+      "lon": 31.0
+    },
+    "target": {
+      "name": "Ukraine",
+      "crop_type": "wheat",
+      "lat": 49.0,
+      "lon": 31.0
+    }
+  },
+  {
+    "year": 2007,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 49.0,
+      "lon": 31.0
+    },
+    "target": {
+      "name": "Ukraine",
+      "crop_type": "wheat",
+      "lat": 49.0,
+      "lon": 31.0
+    }
+  },
+  {
+    "year": 2008,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 49.0,
+      "lon": 31.0
+    },
+    "target": {
+      "name": "Ukraine",
+      "crop_type": "wheat",
+      "lat": 49.0,
+      "lon": 31.0
+    }
+  },
+  {
+    "year": 2009,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 49.0,
+      "lon": 31.0
+    },
+    "target": {
+      "name": "Ukraine",
+      "crop_type": "wheat",
+      "lat": 49.0,
+      "lon": 31.0
+    }
+  },
+  {
+    "year": 2010,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 49.0,
+      "lon": 31.0
+    },
+    "target": {
+      "name": "Ukraine",
+      "crop_type": "wheat",
+      "lat": 49.0,
+      "lon": 31.0
+    }
+  },
+  {
+    "year": 2011,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 49.0,
+      "lon": 31.0
+    },
+    "target": {
+      "name": "Ukraine",
+      "crop_type": "wheat",
+      "lat": 49.0,
+      "lon": 31.0
+    }
+  },
+  {
+    "year": 2012,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 49.0,
+      "lon": 31.0
+    },
+    "target": {
+      "name": "Ukraine",
+      "crop_type": "wheat",
+      "lat": 49.0,
+      "lon": 31.0
+    }
+  },
+  {
+    "year": 2013,
+    "yield_pct": 42.01,
+    "location": {
+      "lat": 49.0,
+      "lon": 31.0
+    },
+    "target": {
+      "name": "Ukraine",
+      "crop_type": "wheat",
+      "lat": 49.0,
+      "lon": 31.0
+    }
+  },
+  {
+    "year": 2014,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 49.0,
+      "lon": 31.0
+    },
+    "target": {
+      "name": "Ukraine",
+      "crop_type": "wheat",
+      "lat": 49.0,
+      "lon": 31.0
+    }
+  },
+  {
+    "year": 2015,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 49.0,
+      "lon": 31.0
+    },
+    "target": {
+      "name": "Ukraine",
+      "crop_type": "wheat",
+      "lat": 49.0,
+      "lon": 31.0
+    }
+  },
+  {
+    "year": 2016,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 49.0,
+      "lon": 31.0
+    },
+    "target": {
+      "name": "Ukraine",
+      "crop_type": "wheat",
+      "lat": 49.0,
+      "lon": 31.0
+    }
+  },
+  {
+    "year": 2017,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 49.0,
+      "lon": 31.0
+    },
+    "target": {
+      "name": "Ukraine",
+      "crop_type": "wheat",
+      "lat": 49.0,
+      "lon": 31.0
+    }
+  },
+  {
+    "year": 2018,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 49.0,
+      "lon": 31.0
+    },
+    "target": {
+      "name": "Ukraine",
+      "crop_type": "wheat",
+      "lat": 49.0,
+      "lon": 31.0
+    }
+  },
+  {
+    "year": 2019,
+    "yield_pct": 63.7,
+    "location": {
+      "lat": 49.0,
+      "lon": 31.0
+    },
+    "target": {
+      "name": "Ukraine",
+      "crop_type": "wheat",
+      "lat": 49.0,
+      "lon": 31.0
+    }
+  },
+  {
+    "year": 2020,
+    "yield_pct": 73.66,
+    "location": {
+      "lat": 49.0,
+      "lon": 31.0
+    },
+    "target": {
+      "name": "Ukraine",
+      "crop_type": "wheat",
+      "lat": 49.0,
+      "lon": 31.0
+    }
+  },
+  {
+    "year": 2021,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 49.0,
+      "lon": 31.0
+    },
+    "target": {
+      "name": "Ukraine",
+      "crop_type": "wheat",
+      "lat": 49.0,
+      "lon": 31.0
+    }
+  },
+  {
+    "year": 2022,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 49.0,
+      "lon": 31.0
+    },
+    "target": {
+      "name": "Ukraine",
+      "crop_type": "wheat",
+      "lat": 49.0,
+      "lon": 31.0
+    }
+  },
+  {
+    "year": 2023,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 49.0,
+      "lon": 31.0
+    },
+    "target": {
+      "name": "Ukraine",
+      "crop_type": "wheat",
+      "lat": 49.0,
+      "lon": 31.0
+    }
+  },
+  {
+    "year": 2004,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 10.0452,
+      "lon": 105.7469
+    },
+    "target": {
+      "name": "Vietnam",
+      "crop_type": "rice",
+      "lat": 10.0452,
+      "lon": 105.7469
+    }
+  },
+  {
+    "year": 2005,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 10.0452,
+      "lon": 105.7469
+    },
+    "target": {
+      "name": "Vietnam",
+      "crop_type": "rice",
+      "lat": 10.0452,
+      "lon": 105.7469
+    }
+  },
+  {
+    "year": 2006,
+    "yield_pct": 96.18,
+    "location": {
+      "lat": 10.0452,
+      "lon": 105.7469
+    },
+    "target": {
+      "name": "Vietnam",
+      "crop_type": "rice",
+      "lat": 10.0452,
+      "lon": 105.7469
+    }
+  },
+  {
+    "year": 2007,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 10.0452,
+      "lon": 105.7469
+    },
+    "target": {
+      "name": "Vietnam",
+      "crop_type": "rice",
+      "lat": 10.0452,
+      "lon": 105.7469
+    }
+  },
+  {
+    "year": 2008,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 10.0452,
+      "lon": 105.7469
+    },
+    "target": {
+      "name": "Vietnam",
+      "crop_type": "rice",
+      "lat": 10.0452,
+      "lon": 105.7469
+    }
+  },
+  {
+    "year": 2009,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 10.0452,
+      "lon": 105.7469
+    },
+    "target": {
+      "name": "Vietnam",
+      "crop_type": "rice",
+      "lat": 10.0452,
+      "lon": 105.7469
+    }
+  },
+  {
+    "year": 2010,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 10.0452,
+      "lon": 105.7469
+    },
+    "target": {
+      "name": "Vietnam",
+      "crop_type": "rice",
+      "lat": 10.0452,
+      "lon": 105.7469
+    }
+  },
+  {
+    "year": 2011,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 10.0452,
+      "lon": 105.7469
+    },
+    "target": {
+      "name": "Vietnam",
+      "crop_type": "rice",
+      "lat": 10.0452,
+      "lon": 105.7469
+    }
+  },
+  {
+    "year": 2012,
+    "yield_pct": 87.33,
+    "location": {
+      "lat": 10.0452,
+      "lon": 105.7469
+    },
+    "target": {
+      "name": "Vietnam",
+      "crop_type": "rice",
+      "lat": 10.0452,
+      "lon": 105.7469
+    }
+  },
+  {
+    "year": 2013,
+    "yield_pct": 99.9,
+    "location": {
+      "lat": 10.0452,
+      "lon": 105.7469
+    },
+    "target": {
+      "name": "Vietnam",
+      "crop_type": "rice",
+      "lat": 10.0452,
+      "lon": 105.7469
+    }
+  },
+  {
+    "year": 2014,
+    "yield_pct": 65.81,
+    "location": {
+      "lat": 10.0452,
+      "lon": 105.7469
+    },
+    "target": {
+      "name": "Vietnam",
+      "crop_type": "rice",
+      "lat": 10.0452,
+      "lon": 105.7469
+    }
+  },
+  {
+    "year": 2015,
+    "yield_pct": 99.1,
+    "location": {
+      "lat": 10.0452,
+      "lon": 105.7469
+    },
+    "target": {
+      "name": "Vietnam",
+      "crop_type": "rice",
+      "lat": 10.0452,
+      "lon": 105.7469
+    }
+  },
+  {
+    "year": 2016,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 10.0452,
+      "lon": 105.7469
+    },
+    "target": {
+      "name": "Vietnam",
+      "crop_type": "rice",
+      "lat": 10.0452,
+      "lon": 105.7469
+    }
+  },
+  {
+    "year": 2017,
+    "yield_pct": 90.16,
+    "location": {
+      "lat": 10.0452,
+      "lon": 105.7469
+    },
+    "target": {
+      "name": "Vietnam",
+      "crop_type": "rice",
+      "lat": 10.0452,
+      "lon": 105.7469
+    }
+  },
+  {
+    "year": 2018,
+    "yield_pct": 98.31,
+    "location": {
+      "lat": 10.0452,
+      "lon": 105.7469
+    },
+    "target": {
+      "name": "Vietnam",
+      "crop_type": "rice",
+      "lat": 10.0452,
+      "lon": 105.7469
+    }
+  },
+  {
+    "year": 2019,
+    "yield_pct": 100.0,
+    "location": {
+      "lat": 10.0452,
+      "lon": 105.7469
+    },
+    "target": {
+      "name": "Vietnam",
+      "crop_type": "rice",
+      "lat": 10.0452,
+      "lon": 105.7469
+    }
+  },
+  {
+    "year": 2020,
+    "yield_pct": 95.1,
+    "location": {
+      "lat": 10.0452,
+      "lon": 105.7469
+    },
+    "target": {
+      "name": "Vietnam",
+      "crop_type": "rice",
+      "lat": 10.0452,
+      "lon": 105.7469
+    }
+  },
+  {
+    "year": 2021,
+    "yield_pct": 42.67,
+    "location": {
+      "lat": 10.0452,
+      "lon": 105.7469
+    },
+    "target": {
+      "name": "Vietnam",
+      "crop_type": "rice",
+      "lat": 10.0452,
+      "lon": 105.7469
+    }
+  },
+  {
+    "year": 2022,
+    "yield_pct": 88.35,
+    "location": {
+      "lat": 10.0452,
+      "lon": 105.7469
+    },
+    "target": {
+      "name": "Vietnam",
+      "crop_type": "rice",
+      "lat": 10.0452,
+      "lon": 105.7469
+    }
+  },
+  {
+    "year": 2023,
+    "yield_pct": 99.48,
+    "location": {
+      "lat": 10.0452,
+      "lon": 105.7469
+    },
+    "target": {
+      "name": "Vietnam",
+      "crop_type": "rice",
+      "lat": 10.0452,
+      "lon": 105.7469
+    }
+  }
+]
