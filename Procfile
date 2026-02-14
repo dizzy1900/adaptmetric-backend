@@ -1,1 +1,1 @@
-web: /usr/bin/env bash start.sh
+web: uvicorn api:app --host 0.0.0.0 --port $PORT
