@@ -1,0 +1,101 @@
+name,lat,lon,project_type,crop_type
+Shanghai Port,31.2304,121.4737,coastal,
+Singapore Port,1.2644,103.822,coastal,
+Rotterdam Port,51.9054,4.4661,coastal,
+Los Angeles Port,33.7406,-118.2712,coastal,
+Jebel Ali Port,24.9857,55.0579,coastal,
+Hamburg Port,53.5454,9.9666,coastal,
+Antwerp Port,51.2577,4.4119,coastal,
+Busan Port,35.1028,129.0403,coastal,
+Hong Kong Port,22.2855,114.1577,coastal,
+Ningbo-Zhoushan Port,29.8683,121.544,coastal,
+Qingdao Port,36.0671,120.3826,coastal,
+Guangzhou Port,23.0989,113.3191,coastal,
+Dubai Port,25.2697,55.3095,coastal,
+Tianjin Port,38.986,117.7856,coastal,
+Port Klang,3.0017,101.3827,coastal,
+Kaohsiung Port,22.6124,120.285,coastal,
+Dalian Port,38.914,121.6147,coastal,
+Xiamen Port,24.4797,118.0819,coastal,
+Tanjung Pelepas Port,1.3633,103.546,coastal,
+Laem Chabang Port,13.067,100.8827,coastal,
+Santos Port,-23.9536,-46.3336,coastal,
+Colombo Port,6.9344,79.8428,coastal,
+Piraeus Port,37.9443,23.6418,coastal,
+Valencia Port,39.4447,-0.3263,coastal,
+Felixstowe Port,51.9526,1.3136,coastal,
+Iowa Corn Belt,42.0046,-93.214,agriculture,maize
+Illinois Corn Belt,40.6331,-89.3985,agriculture,maize
+Nebraska Corn Belt,41.1254,-98.2681,agriculture,maize
+Mato Grosso Brazil,-12.6819,-56.9211,agriculture,maize
+Goias Brazil,-15.827,-49.8362,agriculture,maize
+Parana Brazil,-24.0245,-51.2963,agriculture,maize
+Heilongjiang China,46.8018,127.0769,agriculture,maize
+Jilin China,43.837,126.5496,agriculture,maize
+Shandong China,36.6683,117.0204,agriculture,maize
+Henan China,34.7657,113.7536,agriculture,maize
+Poltava Ukraine,49.5883,34.5514,agriculture,maize
+Cherkasy Ukraine,49.4444,32.0598,agriculture,maize
+Cordoba Argentina,-31.4201,-64.1888,agriculture,maize
+Santa Fe Argentina,-31.6107,-60.6973,agriculture,maize
+Buenos Aires Province,-36.6769,-60.5588,agriculture,maize
+Punjab India,30.7333,76.7794,agriculture,maize
+Madhya Pradesh India,23.2599,77.4126,agriculture,maize
+Karnataka India,15.3173,75.7139,agriculture,maize
+Free State South Africa,-28.4541,26.7968,agriculture,maize
+Mpumalanga South Africa,-25.4651,30.9853,agriculture,maize
+Rift Valley Kenya,-0.3031,36.08,agriculture,maize
+Central Mexico,19.4326,-99.1332,agriculture,maize
+Jalisco Mexico,20.6595,-103.3494,agriculture,maize
+Sinaloa Mexico,24.8091,-107.394,agriculture,maize
+Northern France,49.8941,2.2958,agriculture,maize
+Mekong Delta Vietnam,10.0452,105.7469,agriculture,rice
+Red River Delta Vietnam,20.8449,106.6881,agriculture,rice
+Central Thailand,14.5995,100.5967,agriculture,rice
+Isan Thailand,15.2294,104.8574,agriculture,rice
+West Bengal India,22.9868,87.855,agriculture,rice
+Uttar Pradesh India,26.8467,80.9462,agriculture,rice
+Punjab India Rice,31.1471,75.3412,agriculture,rice
+Andhra Pradesh India,15.9129,79.74,agriculture,rice
+Tamil Nadu India,11.1271,78.6569,agriculture,rice
+Ganges Basin Bangladesh,23.685,90.3563,agriculture,rice
+Sylhet Bangladesh,24.8949,91.8687,agriculture,rice
+Jiangxi China,28.682,115.8579,agriculture,rice
+Hunan China,27.6104,111.7088,agriculture,rice
+Hubei China,30.9756,112.2707,agriculture,rice
+Guangxi China,23.7248,108.8076,agriculture,rice
+Anhui China,31.8612,117.284,agriculture,rice
+Arkansas USA,34.7465,-92.2896,agriculture,rice
+Louisiana USA,30.9843,-91.9623,agriculture,rice
+California Sacramento,38.5816,-121.4944,agriculture,rice
+Java Indonesia,-7.15,110.42,agriculture,rice
+Sulawesi Indonesia,-1.43,121.4456,agriculture,rice
+Luzon Philippines,15.4826,120.5959,agriculture,rice
+Ayeyarwady Myanmar,16.7833,95.1833,agriculture,rice
+Khyber Pakhtunkhwa Pakistan,34.0151,71.5249,agriculture,rice
+Sindh Pakistan,25.8943,68.5247,agriculture,rice
+Miami,25.7617,-80.1918,flood,
+Osaka,34.6937,135.5023,flood,
+Alexandria,31.2001,29.9187,flood,
+Dhaka,23.8103,90.4125,flood,
+Venice,45.4408,12.3155,flood,
+Lagos,6.5244,3.3792,flood,
+Jakarta,-6.2088,106.8456,flood,
+Bangkok,13.7563,100.5018,flood,
+Ho Chi Minh City,10.8231,106.6297,flood,
+Manila,14.5995,120.9842,flood,
+Mumbai,19.076,72.8777,flood,
+Kolkata,22.5726,88.3639,flood,
+Shanghai,31.2304,121.4737,flood,
+Guangzhou,23.1291,113.2644,flood,
+Shenzhen,22.5431,114.0579,flood,
+New Orleans,29.9511,-90.0715,flood,
+Houston,29.7604,-95.3698,flood,
+Tokyo,35.6762,139.6503,flood,
+Tianjin,39.3434,117.3616,flood,
+Chittagong,22.3569,91.7832,flood,
+Hai Phong,20.8449,106.6881,flood,
+Surabaya,-7.2504,112.7688,flood,
+Chennai,13.0827,80.2707,flood,
+Karachi,24.8607,67.0011,flood,
+Abidjan,5.36,-4.0083,flood,
